@@ -8,122 +8,205 @@
   :root { --bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--border:#2e3250;--accent:#1e90ff;--green:#4caf50;--red:#e05c5c;--gold:#f4c542;--text:#e2e8f0;--muted:#8892a4; }
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh}
-  header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-  header h1{font-size:.95rem;font-weight:600;color:var(--accent);letter-spacing:.04em}
-  .hdr-right{display:flex;gap:14px;align-items:center;font-size:.83rem;color:var(--muted)}
-  .badge{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:4px 14px;font-weight:700;font-size:.88rem}
+  header{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:8px}
+  header h1{font-size:.93rem;font-weight:600;color:var(--accent);letter-spacing:.04em}
+  .hdr-right{display:flex;gap:8px;align-items:center;font-size:.82rem;color:var(--muted);flex-wrap:wrap}
+  .badge{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-weight:700;font-size:.82rem}
   .score-b{color:var(--gold)}
-  .timer-b{color:var(--green);font-variant-numeric:tabular-nums}
+  .timer-b{color:var(--green);font-variant-numeric:tabular-nums;cursor:pointer}
   .timer-b.warn{color:var(--gold)}
   .timer-b.danger{color:var(--red)}
+  .timer-b.paused{color:var(--muted)}
+  .mode-b{color:var(--accent)}
 
-  #start-screen{max-width:600px;margin:60px auto;padding:0 24px;text-align:center}
-  #start-screen h2{font-size:1.7rem;margin-bottom:10px}
-  .info-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:20px 0}
-  .info-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px 10px}
-  .info-val{font-size:1.4rem;font-weight:800;color:var(--accent)}
-  .info-lbl{font-size:.75rem;color:var(--muted);margin-top:3px}
-  .pass-note{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin:16px 0;font-size:.85rem;color:var(--muted)}
+  #start-screen{max-width:680px;margin:40px auto;padding:0 20px 40px;text-align:center}
+  #start-screen h2{font-size:1.7rem;margin-bottom:8px}
+  .info-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:14px 0}
+  .info-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 8px}
+  .info-val{font-size:1.3rem;font-weight:800;color:var(--accent)}
+  .info-lbl{font-size:.72rem;color:var(--muted);margin-top:3px}
+  .pass-note{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin:12px 0;font-size:.83rem;color:var(--muted)}
   .pass-note strong{color:var(--gold)}
-  .tag-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0}
-  .tag{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:.76rem;color:var(--muted)}
 
-  .btn{display:inline-block;padding:11px 26px;border-radius:8px;border:none;cursor:pointer;font-size:.92rem;font-weight:600;transition:opacity .15s,transform .1s}
-  .btn:hover{opacity:.85;transform:translateY(-1px)}
+  .mode-select{display:grid;grid-template-columns:1fr;gap:10px;margin:18px 0;text-align:left}
+  .mode-card{background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:14px 16px;cursor:pointer;transition:all .15s;display:flex;gap:12px;align-items:flex-start}
+  .mode-card:hover{border-color:var(--accent);background:var(--surface2)}
+  .mode-card.selected{border-color:var(--accent);background:rgba(30,144,255,.08)}
+  .mode-card.disabled{opacity:.5;cursor:not-allowed}
+  .mode-card.disabled:hover{border-color:var(--border);background:var(--surface)}
+  .mode-icon{font-size:1.6rem;flex-shrink:0;line-height:1}
+  .mode-body{flex:1}
+  .mode-title{font-size:.98rem;font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .mode-desc{font-size:.82rem;color:var(--muted);line-height:1.5}
+  .mode-count{color:var(--muted);font-weight:400;font-size:.78rem}
+
+  .btn{display:inline-block;padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:.9rem;font-weight:600;transition:opacity .15s,transform .1s;font-family:inherit}
+  .btn:hover:not(:disabled){opacity:.85;transform:translateY(-1px)}
+  .btn:disabled{opacity:.35;cursor:not-allowed}
   .btn-primary{background:var(--accent);color:#fff}
   .btn-ghost{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
-  .btn-sm{padding:8px 18px;font-size:.84rem}
+  .btn-gold{background:var(--gold);color:#1a1d27}
+  .btn-red{background:var(--red);color:#fff}
+  .btn-sm{padding:7px 14px;font-size:.81rem}
 
-  #quiz-screen{display:none;max-width:760px;margin:0 auto;padding:28px 24px 80px}
-  .progress-bar-wrap{background:var(--surface2);border-radius:4px;height:5px;margin-bottom:26px}
+  #quiz-screen{display:none;max-width:760px;margin:0 auto;padding:22px 20px 110px}
+  .progress-bar-wrap{background:var(--surface2);border-radius:4px;height:5px;margin-bottom:18px}
   .progress-bar-fill{height:5px;border-radius:4px;background:var(--accent);transition:width .4s}
-  .q-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:.8rem;color:var(--muted)}
+  .q-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:.78rem;color:var(--muted);gap:8px;flex-wrap:wrap}
   .q-num{font-weight:700;color:var(--accent)}
-  .q-topic{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:2px 10px;font-size:.73rem}
-  .q-text{font-size:1.02rem;line-height:1.65;margin-bottom:20px;font-weight:500}
-  .choose-note{font-size:.79rem;color:var(--gold);margin-bottom:14px;font-style:italic}
-  .options{display:flex;flex-direction:column;gap:9px}
-  .option{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:13px 16px;cursor:pointer;transition:border-color .15s,background .15s;display:flex;align-items:flex-start;gap:11px;font-size:.91rem;line-height:1.5;user-select:none}
-  .option:hover{border-color:var(--accent);background:var(--surface2)}
+  .q-meta-right{display:flex;gap:6px;align-items:center}
+  .q-topic{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:2px 10px;font-size:.7rem}
+  .flag-btn{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:2px 10px;font-size:.7rem;cursor:pointer;color:var(--muted);user-select:none;font-family:inherit}
+  .flag-btn:hover{border-color:var(--gold);color:var(--gold)}
+  .flag-btn.flagged{background:rgba(244,197,66,.15);border-color:var(--gold);color:var(--gold)}
+  .q-text{font-size:1rem;line-height:1.6;margin-bottom:16px;font-weight:500}
+  .choose-note{font-size:.78rem;color:var(--gold);margin-bottom:12px;font-style:italic}
+  .options{display:flex;flex-direction:column;gap:8px}
+  .option{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer;transition:all .15s;display:flex;align-items:flex-start;gap:10px;font-size:.9rem;line-height:1.5;user-select:none}
+  .option:hover:not(.locked){border-color:var(--accent);background:var(--surface2)}
   .option.selected{border-color:var(--accent);background:rgba(30,144,255,.12)}
   .option.correct{border-color:var(--green);background:rgba(76,175,80,.13)}
   .option.wrong{border-color:var(--red);background:rgba(224,92,92,.12)}
   .option.missed{border-color:var(--green);background:rgba(76,175,80,.07);border-style:dashed}
-  .opt-letter{width:25px;height:25px;border-radius:50%;background:var(--surface2);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.76rem;flex-shrink:0;color:var(--muted)}
+  .option.locked{cursor:default}
+  .opt-letter{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.74rem;flex-shrink:0;color:var(--muted)}
   .option.selected .opt-letter{background:var(--accent);border-color:var(--accent);color:#fff}
   .option.correct .opt-letter{background:var(--green);border-color:var(--green);color:#fff}
   .option.wrong .opt-letter{background:var(--red);border-color:var(--red);color:#fff}
-  .feedback-box{margin-top:18px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;font-size:.87rem;line-height:1.6;display:none}
+  .feedback-box{margin-top:14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:13px;font-size:.85rem;line-height:1.55;display:none}
   .feedback-box.show{display:block}
-  .feedback-result{font-weight:700;margin-bottom:5px}
+  .feedback-result{font-weight:700;margin-bottom:4px}
   .feedback-result.ok{color:var(--green)}
   .feedback-result.fail{color:var(--red)}
   .feedback-explain{color:var(--muted)}
-  .nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:24px}
+  .nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:18px;gap:8px;flex-wrap:wrap}
+  .nav-left,.nav-right{display:flex;gap:6px;align-items:center}
 
-  #results-screen{display:none;max-width:620px;margin:50px auto;padding:0 24px;text-align:center}
-  .result-ring{width:150px;height:150px;border-radius:50%;border:8px solid var(--surface2);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 22px;font-size:2.5rem;font-weight:800}
-  .result-ring span{font-size:.9rem;font-weight:400;color:var(--muted)}
-  .result-grade{font-size:1.1rem;font-weight:700;margin-bottom:6px}
-  .result-sub{color:var(--muted);font-size:.88rem;margin-bottom:20px}
-  .pass-bar{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:20px;font-size:.85rem}
+  .nav-overview{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:8px 12px;display:flex;gap:4px;overflow-x:auto;z-index:90;-webkit-overflow-scrolling:touch}
+  .nav-overview.hidden{display:none}
+  .nav-chip{flex-shrink:0;width:30px;height:30px;border-radius:6px;background:var(--surface2);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.72rem;font-weight:600;color:var(--muted);transition:all .12s;position:relative;font-family:inherit}
+  .nav-chip:hover{border-color:var(--accent)}
+  .nav-chip.answered{background:rgba(30,144,255,.2);color:var(--text);border-color:var(--accent)}
+  .nav-chip.current{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .nav-chip.flagged::after{content:"⚑";position:absolute;top:-5px;right:-3px;color:var(--gold);font-size:.7rem}
+  .nav-chip.correct{background:rgba(76,175,80,.2);border-color:var(--green);color:var(--green)}
+  .nav-chip.wrong{background:rgba(224,92,92,.2);border-color:var(--red);color:var(--red)}
+
+  #results-screen{display:none;max-width:720px;margin:30px auto;padding:0 20px 40px;text-align:center}
+  .result-ring{width:140px;height:140px;border-radius:50%;border:8px solid var(--surface2);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 18px;font-size:2.3rem;font-weight:800}
+  .result-ring span{font-size:.88rem;font-weight:400;color:var(--muted)}
+  .result-grade{font-size:1.05rem;font-weight:700;margin-bottom:5px}
+  .result-sub{color:var(--muted);font-size:.86rem;margin-bottom:16px}
+  .pass-bar{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:.84rem}
   .pass-bar .hl{color:var(--gold);font-weight:700}
-  .stats-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:22px}
-  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 10px}
-  .stat-val{font-size:1.5rem;font-weight:800}
-  .stat-lbl{font-size:.73rem;color:var(--muted);margin-top:3px}
+  .stats-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:18px}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 8px}
+  .stat-val{font-size:1.4rem;font-weight:800}
+  .stat-lbl{font-size:.7rem;color:var(--muted);margin-top:3px}
   .stat-card.green .stat-val{color:var(--green)}
   .stat-card.red .stat-val{color:var(--red)}
   .stat-card.gold .stat-val{color:var(--gold)}
   .stat-card.blue .stat-val{color:var(--accent)}
-  .review-section{margin-top:36px;text-align:left}
-  .review-section h3{margin-bottom:14px;font-size:.95rem;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:8px}
-  .review-item{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--red);border-radius:10px;padding:13px 15px;margin-bottom:9px}
-  .review-q{font-size:.85rem;margin-bottom:6px;font-weight:500}
-  .review-ans{font-size:.78rem;color:var(--muted)}
+
+  .module-stats{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:18px;text-align:left}
+  .module-stats h3{font-size:.88rem;color:var(--muted);margin-bottom:10px;border-bottom:1px solid var(--border);padding-bottom:8px}
+  .mod-row{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:.82rem}
+  .mod-name{flex:1;color:var(--text)}
+  .mod-bar{width:100px;height:7px;background:var(--surface2);border-radius:4px;overflow:hidden}
+  .mod-bar-fill{height:100%;background:var(--green);transition:width .6s}
+  .mod-bar-fill.warn{background:var(--gold)}
+  .mod-bar-fill.bad{background:var(--red)}
+  .mod-score{font-variant-numeric:tabular-nums;color:var(--muted);min-width:44px;text-align:right;font-size:.78rem}
+
+  .review-section{margin-top:20px;text-align:left}
+  .review-section h3{margin-bottom:12px;font-size:.92rem;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:8px}
+  .review-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  .filter-btn{background:var(--surface2);border:1px solid var(--border);border-radius:16px;padding:5px 12px;font-size:.76rem;cursor:pointer;color:var(--muted);font-family:inherit}
+  .filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .review-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px}
+  .review-item.ok{border-left:3px solid var(--green)}
+  .review-item.fail{border-left:3px solid var(--red)}
+  .review-item.flagged{border-left:3px solid var(--gold)}
+  .review-q{font-size:.84rem;margin-bottom:5px;font-weight:500}
+  .review-ans{font-size:.76rem;color:var(--muted);margin-bottom:5px}
+  .review-explain{font-size:.76rem;color:var(--muted);font-style:italic;padding-top:5px;border-top:1px solid var(--border);margin-top:5px}
   .correct-ans{color:var(--green)}
-  @media(max-width:520px){.stats-grid{grid-template-columns:1fr 1fr}.info-grid{grid-template-columns:1fr 1fr 1fr}}
+  .review-topic{font-size:.68rem;color:var(--muted);opacity:.7;margin-bottom:3px}
+
+  .result-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:6px}
+
+  @media(max-width:520px){
+    .stats-grid{grid-template-columns:1fr 1fr}
+    .mod-bar{width:70px}
+    header{padding:10px 12px}
+    .hdr-right{gap:5px}
+    .badge{padding:3px 9px;font-size:.75rem}
+  }
 </style>
 </head>
 <body>
 <header>
-  <h1>CCNA 1 v7 — Final Exam</h1>
+  <h1>CCNA 1 v7 Final Exam</h1>
   <div class="hdr-right">
+    <span class="badge mode-b" id="hdr-mode" style="display:none"></span>
     <span id="hdr-progress" style="display:none"></span>
-    <span class="badge timer-b" id="timer-badge" style="display:none">1:15:00</span>
+    <span class="badge timer-b" id="timer-badge" style="display:none" title="Klik om te pauzeren/hervatten">1:15:00</span>
     <span class="badge score-b" id="hdr-score" style="display:none"><span id="score-live">0</span>/<span id="total-live">60</span></span>
   </div>
 </header>
 
 <div id="start-screen">
-  <div style="font-size:2.8rem;margin-bottom:14px">🎓</div>
+  <div style="font-size:2.6rem;margin-bottom:10px">🎓</div>
   <h2>CCNA 1 Final Exam</h2>
-  <p style="color:var(--muted);line-height:1.7;margin-bottom:6px">Oefenexamen op basis van het officiële Cisco NetAcad ITNv7 curriculum (Modules 1–17).</p>
+  <p style="color:var(--muted);line-height:1.5;margin-bottom:4px">Oefenexamen op basis van het officiële Cisco NetAcad ITNv7 curriculum.</p>
   <div class="info-grid">
     <div class="info-card"><div class="info-val">60</div><div class="info-lbl">Vragen per ronde</div></div>
     <div class="info-card"><div class="info-val">70%</div><div class="info-lbl">Slagingsgrens (42/60)</div></div>
     <div class="info-card"><div class="info-val">1:15</div><div class="info-lbl">Tijdslimiet</div></div>
   </div>
   <div class="pass-note">
-    Pool van <strong id="pool-count">—</strong> vragen uit Practice Final + Final Exam.<br>
-    Elke ronde worden er <strong>60 random geselecteerd</strong> en geshuffeld.
+    Pool van <strong id="pool-count">—</strong> unieke vragen uit Practice Final + Final Exam. Per ronde worden er <strong>60 random geselecteerd</strong>, met variatie elke keer.
   </div>
-  <div class="tag-row">
-    <span class="tag">Modules 1–17</span>
-    <span class="tag">Multi-select</span>
-    <span class="tag">Direct feedback</span>
-    <span class="tag">Timer</span>
-    <span class="tag">Random elke ronde</span>
+
+  <p style="color:var(--muted);font-size:.82rem;margin:18px 0 4px;text-align:left">Kies een mode:</p>
+  <div class="mode-select" id="mode-select">
+    <div class="mode-card selected" data-mode="study" onclick="selectMode('study')">
+      <div class="mode-icon">📚</div>
+      <div class="mode-body">
+        <div class="mode-title">Study mode</div>
+        <div class="mode-desc">Direct feedback na elke vraag met uitleg. Geen timer. Ideaal voor leren en concepten oppikken.</div>
+      </div>
+    </div>
+    <div class="mode-card" data-mode="exam" onclick="selectMode('exam')">
+      <div class="mode-icon">⏱️</div>
+      <div class="mode-body">
+        <div class="mode-title">Exam mode</div>
+        <div class="mode-desc">Geen feedback tijdens de toets. Timer van 1:15:00. Je kunt terug en vooruit navigeren, vragen flaggen. Resultaat pas aan het eind.</div>
+      </div>
+    </div>
+    <div class="mode-card" data-mode="wrong" onclick="selectMode('wrong')" id="wrong-mode-card">
+      <div class="mode-icon">🎯</div>
+      <div class="mode-body">
+        <div class="mode-title">Wrong-only retry <span class="mode-count" id="wrong-count"></span></div>
+        <div class="mode-desc" id="wrong-desc">Nog geen fouten opgeslagen. Maak eerst een ronde in study of exam mode.</div>
+      </div>
+    </div>
   </div>
-  <p style="color:var(--muted);font-size:.85rem;margin-bottom:20px">De timer loopt zodra je start. Bij 0:00 worden de resultaten getoond.</p>
-  <button class="btn btn-primary" onclick="startQuiz()">Start oefenexamen</button>
+
+  <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+    <button class="btn btn-primary" onclick="startQuiz()">Start</button>
+    <button class="btn btn-ghost btn-sm" onclick="clearWrongs()" id="clear-wrongs-btn" style="display:none">Wis opgeslagen fouten</button>
+  </div>
 </div>
 
 <div id="quiz-screen">
   <div class="progress-bar-wrap"><div class="progress-bar-fill" id="prog-fill"></div></div>
   <div class="q-meta">
     <span class="q-num" id="q-num">Vraag 1 van 60</span>
-    <span class="q-topic" id="q-topic"></span>
+    <div class="q-meta-right">
+      <span class="flag-btn" id="flag-btn" onclick="toggleFlag()">⚑ Flag</span>
+      <span class="q-topic" id="q-topic"></span>
+    </div>
   </div>
   <div class="q-text" id="q-text"></div>
   <div class="choose-note" id="choose-note" style="display:none"></div>
@@ -133,10 +216,18 @@
     <div class="feedback-explain" id="feedback-explain"></div>
   </div>
   <div class="nav-row">
-    <button class="btn btn-ghost btn-sm" id="btn-check" onclick="checkAnswer()">Check antwoord</button>
-    <button class="btn btn-primary btn-sm" id="btn-next" onclick="nextQuestion()" style="display:none">Volgende &rarr;</button>
+    <div class="nav-left">
+      <button class="btn btn-ghost btn-sm" id="btn-prev" onclick="prevQuestion()">&larr; Vorige</button>
+    </div>
+    <div class="nav-right">
+      <button class="btn btn-ghost btn-sm" id="btn-check" onclick="checkAnswer()">Check antwoord</button>
+      <button class="btn btn-primary btn-sm" id="btn-next" onclick="nextQuestion()">Volgende &rarr;</button>
+      <button class="btn btn-gold btn-sm" id="btn-finish" onclick="confirmFinish()" style="display:none">Klaar &check;</button>
+    </div>
   </div>
 </div>
+
+<div class="nav-overview hidden" id="nav-overview"></div>
 
 <div id="results-screen">
   <div class="result-ring" id="result-ring">
@@ -152,32 +243,44 @@
     <div class="stat-card green"><div class="stat-val" id="res-correct">0</div><div class="stat-lbl">Correct</div></div>
     <div class="stat-card red"><div class="stat-val" id="res-wrong">0</div><div class="stat-lbl">Fout</div></div>
     <div class="stat-card gold"><div class="stat-val" id="res-pct2">0%</div><div class="stat-lbl">Score</div></div>
-    <div class="stat-card blue"><div class="stat-val" id="res-time">—</div><div class="stat-lbl">Tijd gebruikt</div></div>
+    <div class="stat-card blue"><div class="stat-val" id="res-time">—</div><div class="stat-lbl">Tijd</div></div>
   </div>
-  <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-    <button class="btn btn-primary" onclick="startQuiz()">Opnieuw (nieuwe selectie)</button>
-    <button class="btn btn-ghost" onclick="showReview()">Bekijk fouten</button>
+
+  <div class="module-stats" id="module-stats"></div>
+
+  <div class="result-actions">
+    <button class="btn btn-primary" onclick="location.reload()">Opnieuw</button>
+    <button class="btn btn-ghost" onclick="retryWrongs()" id="retry-wrongs-btn">Retry alleen fouten</button>
   </div>
-  <div class="review-section" id="review-section" style="display:none"></div>
+
+  <div class="review-section">
+    <h3>Alle vragen terugzien</h3>
+    <div class="review-filters">
+      <button class="filter-btn active" data-filter="all" onclick="setReviewFilter('all')">Alle</button>
+      <button class="filter-btn" data-filter="wrong" onclick="setReviewFilter('wrong')">Alleen fout</button>
+      <button class="filter-btn" data-filter="flagged" onclick="setReviewFilter('flagged')">Geflagged</button>
+    </div>
+    <div id="review-list"></div>
+  </div>
 </div>
 
 <script>
 // ============================================================
-// QUESTION POOL — Practice Final Exam + Final Exam combined
-// correct: array of indices into options[] that are correct
+// QUESTION POOL
+// group: questions with the same group id are capped (max 2 per round)
 // ============================================================
 const POOL = [
   // --- NETWORKING TODAY / SECURITY ---
   {q:"Which two traffic types use the Real-Time Transport Protocol (RTP)? (Choose two.)",topic:"Topic 14.3.4",options:["Video","Voice","Web","File transfer","Peer-to-peer"],correct:[0,1],explain:"RTP is used for real-time delivery of audio and video. Web (HTTP) and file transfer (FTP) use TCP without RTP."},
   {q:"Three bank employees use the corporate network: one views a web page, one does financial transactions, one participates in a live audio conference. If QoS is implemented, what are the priorities from highest to lowest?",topic:"Topic 1.6.4",options:["Audio conference, financial transactions, web page","Financial transactions, audio conference, web page","Financial transactions, web page, audio conference","Audio conference, web page, financial transactions"],correct:[0],explain:"QoS prioritizes real-time delay-sensitive traffic (audio/video) first, then transactional data, then web browsing."},
-  {q:"What characteristic describes a virus?",topic:"Topic 16.2.1",options:["Malicious software or code running on an end device","A network device that filters access and traffic coming into a network","The use of stolen credentials to access private data","An attack that slows or crashes a device or network service"],correct:[0],explain:"A virus is malicious code that runs on an end device, typically self-replicating by attaching to legitimate programs."},
-  {q:"What characteristic describes a DoS attack?",topic:"Topic 1.8.1",options:["An attack that slows or crashes a device or network service","The use of stolen credentials to access private data","Software installed on a user device that collects information about the user","A network device that filters access and traffic coming into a network"],correct:[0],explain:"A DoS attack floods a target to exhaust resources, preventing legitimate users from accessing services."},
-  {q:"What characteristic describes a Trojan horse?",topic:"Topic 16.2.1",options:["Malicious software or code running on an end device","An attack that slows or crashes a device or network service","The use of stolen credentials to access private data","A network device that filters access and traffic coming into a network"],correct:[0],explain:"A Trojan horse appears to be legitimate software but contains hidden malicious code that executes on the end device."},
-  {q:"What characteristic describes spyware?",topic:"Topic 1.8.1",options:["Software installed on a user device that collects information about the user","The use of stolen credentials to access private data","An attack that slows or crashes a device or network service","A network device that filters access and traffic coming into a network"],correct:[0],explain:"Spyware secretly collects user data (browsing habits, credentials, keystrokes) without the user's knowledge or consent."},
-  {q:"What characteristic describes adware?",topic:"Topic 1.8.1",options:["Software installed on a user device that collects information about the user","The use of stolen credentials to access private data","An attack that slows or crashes a device or network service","A network device that filters access and traffic coming into a network"],correct:[0],explain:"Adware is a type of software that displays unwanted advertisements and collects user information, similar to spyware."},
-  {q:"What characteristic describes identity theft?",topic:"Topic 1.8.1",options:["The use of stolen credentials to access private data","Software on a router that filters traffic based on IP addresses or applications","Software that identifies fast-spreading threats","A tunneling protocol that provides remote users with secure access"],correct:[0],explain:"Identity theft involves stealing personal credentials or data to impersonate someone and access their private information."},
-  {q:"What characteristic describes antivirus software?",topic:"Topic 1.8.2",options:["Applications that protect end devices from becoming infected with malicious software","A network device that filters access and traffic coming into a network","A tunneling protocol that provides remote users with secure access into a network","Software on a router that filters traffic based on IP addresses or applications"],correct:[0],explain:"Antivirus software scans files and processes to detect, quarantine, and remove known malicious software."},
-  {q:"What characteristic describes antispyware?",topic:"Topic 1.8.2",options:["Applications that protect end devices from becoming infected with malicious software","A network device that filters access and traffic coming into a network","Software on a router that filters traffic based on IP addresses or applications","A tunneling protocol that provides remote users with secure access into a network"],correct:[0],explain:"Antispyware detects and removes spyware from end devices, protecting user privacy and system performance."},
+  {q:"What characteristic describes a virus?",topic:"Topic 16.2.1",group:"malware_desc",options:["Malicious software or code running on an end device","A network device that filters access and traffic coming into a network","The use of stolen credentials to access private data","An attack that slows or crashes a device or network service"],correct:[0],explain:"A virus is malicious code that runs on an end device, typically self-replicating by attaching to legitimate programs."},
+  {q:"What characteristic describes a DoS attack?",topic:"Topic 1.8.1",group:"malware_desc",options:["An attack that slows or crashes a device or network service","The use of stolen credentials to access private data","Software installed on a user device that collects information about the user","A network device that filters access and traffic coming into a network"],correct:[0],explain:"A DoS attack floods a target to exhaust resources, preventing legitimate users from accessing services."},
+  {q:"What characteristic describes a Trojan horse?",topic:"Topic 16.2.1",group:"malware_desc",options:["Malicious software or code running on an end device","An attack that slows or crashes a device or network service","The use of stolen credentials to access private data","A network device that filters access and traffic coming into a network"],correct:[0],explain:"A Trojan horse appears to be legitimate software but contains hidden malicious code that executes on the end device."},
+  {q:"What characteristic describes spyware?",topic:"Topic 1.8.1",group:"malware_desc",options:["Software installed on a user device that collects information about the user","The use of stolen credentials to access private data","An attack that slows or crashes a device or network service","A network device that filters access and traffic coming into a network"],correct:[0],explain:"Spyware secretly collects user data (browsing habits, credentials, keystrokes) without the user's knowledge or consent."},
+  {q:"What characteristic describes adware?",topic:"Topic 1.8.1",group:"malware_desc",options:["Software installed on a user device that collects information about the user","The use of stolen credentials to access private data","An attack that slows or crashes a device or network service","A network device that filters access and traffic coming into a network"],correct:[0],explain:"Adware is a type of software that displays unwanted advertisements and collects user information, similar to spyware."},
+  {q:"What characteristic describes identity theft?",topic:"Topic 1.8.1",group:"malware_desc",options:["The use of stolen credentials to access private data","Software on a router that filters traffic based on IP addresses or applications","Software that identifies fast-spreading threats","A tunneling protocol that provides remote users with secure access"],correct:[0],explain:"Identity theft involves stealing personal credentials or data to impersonate someone and access their private information."},
+  {q:"What characteristic describes antivirus software?",topic:"Topic 1.8.2",group:"defense_desc",options:["Applications that protect end devices from becoming infected with malicious software","A network device that filters access and traffic coming into a network","A tunneling protocol that provides remote users with secure access into a network","Software on a router that filters traffic based on IP addresses or applications"],correct:[0],explain:"Antivirus software scans files and processes to detect, quarantine, and remove known malicious software."},
+  {q:"What characteristic describes antispyware?",topic:"Topic 1.8.2",group:"defense_desc",options:["Applications that protect end devices from becoming infected with malicious software","A network device that filters access and traffic coming into a network","Software on a router that filters traffic based on IP addresses or applications","A tunneling protocol that provides remote users with secure access into a network"],correct:[0],explain:"Antispyware detects and removes spyware from end devices, protecting user privacy and system performance."},
   {q:"Which two devices would be described as intermediary devices? (Choose two.)",topic:"Topic 1.2.4",options:["Wireless LAN controller","IPS (Intrusion Prevention System)","Server","Gaming console","Retail scanner"],correct:[0,1],explain:"Intermediary devices forward and manage traffic: routers, switches, WLCs, firewalls, IPS. End devices are source/destination."},
   {q:"Which statement describes network security?",topic:"Topic 1.6.5",options:["It ensures sensitive corporate data is available for authorized users","It supports growth over time in accordance with approved network design procedures","It synchronizes traffic flows using timestamps","It prioritizes data flows in order to give priority to delay-sensitive traffic"],correct:[0],explain:"Network security protects data and resources from unauthorized access while ensuring availability to authorized users."},
   {q:"An employee of a large corporation remotely logs in, attends a video conference. The ISP connection fails, a secondary activates in seconds, the disruption goes unnoticed. What three network characteristics are described? (Choose three.)",topic:"Topic 1.6.1",options:["Security","Quality of service","Fault tolerance","Scalability","Powerline networking","Integrity"],correct:[0,1,2],explain:"Login credentials = security. Good video quality = QoS. Automatic failover without disruption = fault tolerance."},
@@ -187,7 +290,7 @@ const POOL = [
   {q:"A disgruntled employee uses free wireless tools to gather information about enterprise wireless networks to later hack them. What type of attack is this?",topic:"Topic 16.2.2",options:["Reconnaissance","DoS","Access","Trojan horse"],correct:[0],explain:"Reconnaissance attacks involve unauthorized gathering of information about a target before launching an actual attack."},
   {q:"Which type of security threat would be responsible if a spreadsheet add-on disables the local software firewall?",topic:"Topic 16.2.1",options:["Trojan horse","Brute-force attack","DoS","Buffer overflow"],correct:[0],explain:"A Trojan horse disguises malicious functionality within seemingly legitimate software — disabling security controls is a classic Trojan behavior."},
   {q:"What are the two most effective ways to defend against malware? (Choose two.)",topic:"Topic 16.3.3",options:["Update the operating system and other application software","Install and update antivirus software","Implement a VPN","Implement network firewalls","Implement RAID"],correct:[0,1],explain:"Software updates patch known vulnerabilities. Antivirus software detects and removes known malware threats."},
-  // --- BASIC SWITCH CONFIG ---
+  // --- SWITCH CONFIG ---
   {q:"A wired laser printer is attached to a home computer and shared with other computers on the network. What networking model is in use?",topic:"Topic 1.2.2",options:["Peer-to-peer (P2P)","Client-based","Master-slave","Point-to-point"],correct:[0],explain:"In a P2P model, devices share resources directly without a dedicated server."},
   {q:"What command can be used on a Windows PC to see the IP configuration of that computer?",topic:"Topic 17.5.1",options:["ipconfig","show ip interface brief","ping","show interfaces"],correct:[0],explain:"'ipconfig' is the Windows command-line tool. 'show ip interface brief' is Cisco IOS syntax."},
   {q:"An administrator tries to configure a switch but receives an error. The prompt shows Router>. What is the problem?",topic:"Topic 2.2.4",options:["The administrator must first enter privileged EXEC mode before issuing the command","The entire command 'configure terminal' must be used","The administrator is already in global configuration mode","The administrator must connect via the console port"],correct:[0],explain:"The '>' prompt is user EXEC mode. 'enable' is needed first to reach privileged EXEC (#), then 'configure terminal'."},
@@ -212,10 +315,10 @@ const POOL = [
   {q:"What OSI physical layer term describes the measure of the transfer of bits across a medium over a given period of time?",topic:"Topic 4.2.6",options:["Bandwidth","Latency","Goodput","Throughput"],correct:[0],explain:"Bandwidth is the theoretical maximum bit capacity of a medium measured in bps. Throughput is actual measured rate; goodput excludes overhead."},
   {q:"What technique is used with UTP cable to help protect against signal interference from crosstalk?",topic:"Topic 4.4.2",options:["Twisting the wire pairs together","Shielding each wire pair with foil","Using thicker copper conductors","Installing the cable in metal conduit"],correct:[0],explain:"Twisting wire pairs cancels out EMI and crosstalk. The twist rate (twists per meter) determines the cable's noise resistance."},
   {q:"What are three commonly followed standards for constructing and installing cabling? (Choose three.)",topic:"Topic 4.4.2",options:["Cable lengths","Connector types","Pinouts","Cost per meter","Connector color","Tensile strength of plastic insulator"],correct:[0,1,2],explain:"Cabling standards specify: maximum cable lengths, connector types (RJ-45, LC, etc.), and pinouts (T568A/T568B wiring standards)."},
-  // --- DATA LINK AND ETHERNET ---
+  // --- DATA LINK & ETHERNET ---
   {q:"Which two functions are performed at the LLC sublayer to facilitate Ethernet communication? (Choose two.)",topic:"Topic 6.1.2",options:["Places information in the frame identifying which network layer protocol is encapsulated","Enables IPv4 and IPv6 to utilize the same physical medium","Implements CSMA/CD over legacy shared half-duplex media","Applies source and destination MAC addresses to Ethernet frame","Implements a process to delimit fields within an Ethernet 2 frame"],correct:[0,1],explain:"LLC (upper sublayer) identifies the L3 protocol in the frame and allows multiple L3 protocols (IPv4/IPv6) to share the same media. MAC handles addressing and media access."},
   {q:"Which two functions are performed at the MAC sublayer to facilitate Ethernet communication? (Choose two.)",topic:"Topic 7.1.2",options:["Implements a process to delimit fields within an Ethernet 2 frame","Implements trailer with frame check sequence for error detection","Places information in the frame identifying which network layer protocol is encapsulated","Handles communication between upper layer networking software and Ethernet NIC hardware","Enables IPv4 and IPv6 to utilize the same physical medium"],correct:[0,1],explain:"MAC (lower sublayer) provides framing (field delimiting) and error detection via the FCS/CRC trailer. Identifying L3 protocols and interfacing with software are LLC functions."},
-  {q:"What are two primary responsibilities of the Ethernet MAC sublayer? (Choose two.)",topic:"Topic 7.1.3",options:["Accessing the media","Data encapsulation","Error detection","Logical addressing","Frame delimiting"],correct:[0,1],explain:"The MAC sublayer handles media access control (CSMA/CD) and data encapsulation (framing, addressing). Error detection via FCS is part of encapsulation."},
+  {q:"What are two primary responsibilities of the Ethernet MAC sublayer? (Choose two.)",topic:"Topic 7.1.3",options:["Accessing the media","Data encapsulation","Error detection","Logical addressing","Frame delimiting"],correct:[0,1],explain:"The MAC sublayer handles media access control (CSMA/CD) and data encapsulation (framing, addressing)."},
   {q:"What does a router do first when it receives a Layer 2 frame?",topic:"Topic 6.1.3",options:["De-encapsulates the frame","Determines the best path","Re-encapsulates the packet into a new frame","Forwards the new frame to the next medium"],correct:[0],explain:"First: strip the L2 header (de-encapsulate). Then: examine L3 packet, find best path, re-encapsulate, forward."},
   {q:"If PC1 is sending a packet to PC2 on a different network through R1, what will R1 do with the Ethernet frame header attached by PC1?",topic:"Topic 6.1.3",options:["Remove the Ethernet header and configure a new Layer 2 header before sending it out S0/0/0","Nothing, because the router has a route to the destination network","Open the header and use it to determine whether data is to be sent out S0/0/0","Open the header and replace the destination MAC address with a new one"],correct:[0],explain:"The router strips the entire incoming L2 frame and creates a completely new L2 header for the outgoing interface. It does not just replace the MAC — it builds an entirely new frame."},
   {q:"Which frame field is created by a source node and used by a destination node to ensure that a transmitted data signal has not been altered?",topic:"Topic 6.3.2",options:["Frame check sequence field","User Datagram Protocol field","Transport layer error check field","Flow control field"],correct:[0],explain:"The FCS field contains a CRC value. The destination recalculates and compares it to detect errors introduced during transmission."},
@@ -237,7 +340,7 @@ const POOL = [
   {q:"Which value in an IPv4 header field is decremented by each router that receives a packet?",topic:"Topic 8.2.2",options:["Time-to-Live (TTL)","Header checksum","Protocol","Identification"],correct:[0],explain:"The TTL field is decremented by 1 at each router hop. When it reaches 0 the packet is discarded to prevent infinite loops."},
   {q:"Which routing table entry has a next hop address associated with a destination network?",topic:"Topic 8.5.2",options:["Remote routes","Directly-connected routes","Local routes","C and L source routes"],correct:[0],explain:"Remote routes require passing through another router, so they have a next-hop IP. Directly connected and local routes have no next-hop."},
   {q:"During forwarding traffic, what will the router do immediately after matching the destination IP to a directly connected routing table entry?",topic:"Topic 8.5.1",options:["Switch the packet to the directly connected interface","Analyze the destination IP address","Look up the next-hop address for the packet","Discard the traffic after consulting the route table"],correct:[0],explain:"If the destination is directly connected, no next-hop lookup is needed. The router switches the packet directly to that interface."},
-  {q:"Which two statements are correct in a comparison of IPv4 and IPv6 packet headers? (Choose two.)",topic:"Topic 8.3.3",options:["The Source Address field name from IPv4 is kept in IPv6","The Time-to-Live field from IPv4 has been replaced by the Hop Limit field in IPv6","The Version field from IPv4 is not kept in IPv6","The Destination Address field is new in IPv6","The Header Checksum field name from IPv4 is kept in IPv6"],correct:[0,1],explain:"Both versions have a Source Address field. IPv4's TTL becomes Hop Limit in IPv6 (same purpose, different name). IPv6 dropped the Header Checksum field."},
+  {q:"Which two statements are correct in a comparison of IPv4 and IPv6 packet headers? (Choose two.)",topic:"Topic 8.3.3",options:["The Source Address field name from IPv4 is kept in IPv6","The Time-to-Live field from IPv4 has been replaced by the Hop Limit field in IPv6","The Version field from IPv4 is not kept in IPv6","The Destination Address field is new in IPv6","The Header Checksum field name from IPv4 is kept in IPv6"],correct:[0,1],explain:"Both versions have a Source Address field. IPv4's TTL becomes Hop Limit in IPv6. IPv6 dropped the Header Checksum field."},
   // --- ARP ---
   {q:"A host needs to send a packet to a device on a remote LAN but has no ARP cache entries. How will it obtain the destination MAC address?",topic:"Topic 9.2.5",options:["It will send an ARP request for the MAC address of the default gateway","It will send an ARP request for the MAC address of the destination device","It will send the frame with a broadcast MAC address","It will send a request to the DNS server for the destination MAC address"],correct:[0],explain:"MAC addresses never cross router boundaries. For remote destinations, the host ARPs for the default gateway's MAC address — not the final destination."},
   {q:"Which destination address is used in an ARP request frame?",topic:"Topic 9.2.3",options:["FFFF.FFFF.FFFF","0.0.0.0","255.255.255.255","The physical address of the destination host"],correct:[0],explain:"ARP requests are Layer 2 broadcasts. Destination MAC = FF:FF:FF:FF:FF:FF so all devices on the local segment receive and process the request."},
@@ -246,49 +349,51 @@ const POOL = [
   {q:"What are two problems that can be caused by a large number of ARP request and reply messages? (Choose two.)",topic:"Topic 9.2.8",options:["The ARP request is sent as a broadcast, and will flood the entire subnet","All ARP request messages must be processed by all nodes on the local network","Switches become overloaded because they concentrate all traffic from attached subnets","A large number of ARP messages slow switching because the switch must update its MAC table","The network becomes overloaded because ARP replies have very large payloads"],correct:[0,1],explain:"ARP broadcasts flood the subnet and all hosts must process them (CPU interrupt). Neither overloads the switch MAC table nor creates large payloads."},
   {q:"PC1 issues an ARP request to send a packet to PC3 on a remote network. What will happen next?",topic:"Topic 9.2.5",options:["RT1 will send an ARP reply with its own Fa0/0 MAC address","SW1 will send an ARP reply with its Fa0/1 MAC address","RT1 will forward the ARP request to PC3","RT1 will send an ARP reply with the PC3 MAC address"],correct:[0],explain:"The default gateway replies to the ARP with its local interface MAC (Fa0/0, the side facing PC1). L2 addresses never cross router boundaries."},
   {q:"PC1 needs to send a packet to PC2 on the same network and issues an ARP request. What will happen next?",topic:"Topic 9.2.4",options:["PC2 will send an ARP reply with the PC2 MAC address","SW1 will send an ARP reply with the SW1 Fa0/1 MAC address","RT1 will send an ARP reply with the RT1 Fa0/0 MAC address","SW1 will send an ARP reply with the PC2 MAC address"],correct:[0],explain:"When communicating on the same network, the destination device (PC2) responds directly with its own MAC address."},
-  // --- BASIC ROUTER CONFIG ---
+  // --- ROUTER CONFIG ---
   {q:"The IP address of which device interface should be used as the default gateway setting of host H1? (H1 is on the LAN connected to R1's G0/0)",topic:"Topic 10.3.1",options:["R1: G0/0","R1: S0/0/0","R2: S0/0/1","R2: S0/0/0"],correct:[0],explain:"The default gateway is the IP address of the router interface on the same LAN segment as the host."},
   {q:"A router boots and enters setup mode. What is the reason for this?",topic:"Topic 10.1.1",options:["The configuration file is missing from NVRAM","The IOS image is corrupt","Cisco IOS is missing from flash memory","POST has detected hardware failure"],correct:[0],explain:"If no startup-config is found in NVRAM, the router enters setup mode (System Configuration Dialog) to create an initial configuration."},
   {q:"The global configuration command 'ip default-gateway 172.16.100.1' is applied to a switch. What is the effect?",topic:"Topic 10.3.2",options:["The switch can be remotely managed from a host on another network","The switch can communicate with other hosts on the 172.16.100.0 network","The switch is limited to sending/receiving frames to/from the gateway","The switch will have a management interface with the address 172.16.100.1"],correct:[0],explain:"Without a default gateway, a Layer 2 switch can't send management traffic to hosts on other networks. This command enables remote management across networks."},
   {q:"If the default gateway is configured incorrectly on a host, what is the impact on communications?",topic:"Topic 10.3.1",options:["The host cannot communicate with hosts in other networks","The host cannot communicate with other hosts in the local network","A ping from the host to 127.0.0.1 would not be successful","The switch will not forward packets initiated by the host"],correct:[0],explain:"The default gateway is only needed for inter-network communication. Local subnet communication is unaffected by a wrong gateway."},
-  {q:"Which information does the show startup-config command display?",topic:"Topic 2.4.4",options:["The configuration saved in NVRAM that will be used upon next reboot","The current active configuration running in RAM","The IOS version and hardware information","The routing table entries currently in use"],correct:[0],explain:"'show startup-config' displays the configuration stored in NVRAM (non-volatile RAM), which is loaded at boot time."},
-  // --- IPv4 ADDRESSING ---
-  {q:"A network administrator is adding a new LAN that must support 25 connected devices. What is the smallest network mask that can be used?",topic:"Topic 11.7.2",options:["255.255.255.224","255.255.255.128","255.255.255.192","255.255.255.240"],correct:[0],explain:"/27 (255.255.255.224) gives 30 usable hosts. /28 gives only 14 — too few for 25 devices."},
-  {q:"A network administrator is adding a new LAN that must support 61 connected devices. What is the smallest network mask that can be used?",topic:"Topic 11.7.2",options:["255.255.255.192","255.255.255.240","255.255.255.224","255.255.255.128"],correct:[0],explain:"/26 (255.255.255.192) gives 62 usable hosts. /27 gives only 30 — too few for 61 devices."},
-  {q:"A network administrator is adding a new LAN that must support 90 connected devices. What is the smallest network mask that can be used?",topic:"Topic 11.7.2",options:["255.255.255.128","255.255.255.240","255.255.255.248","255.255.255.224"],correct:[0],explain:"/25 (255.255.255.128) gives 126 usable hosts. /26 gives only 62 — too few for 90 devices."},
-  {q:"A network administrator is adding a new LAN that must support 4 connected devices. What is the smallest network mask that can be used?",topic:"Topic 11.5.2",options:["255.255.255.248","255.255.255.0","255.255.255.128","255.255.255.192"],correct:[0],explain:"/29 (255.255.255.248) gives 6 usable hosts. /30 gives only 2 — too few for 4 devices."},
-  {q:"A network administrator is adding a new LAN that must support 10 connected devices. What is the smallest network mask that can be used?",topic:"Topic 11.7.2",options:["255.255.255.240","255.255.255.192","255.255.255.248","255.255.255.224"],correct:[0],explain:"/28 (255.255.255.240) gives 14 usable hosts. /29 gives only 6 — too few for 10 devices."},
-  {q:"A network administrator is adding a new LAN that must support 200 connected devices. What is the smallest network mask that can be used?",topic:"Topic 11.7.2",options:["255.255.255.0","255.255.255.240","255.255.255.248","255.255.255.224"],correct:[0],explain:"/24 (255.255.255.0) gives 254 usable hosts. /25 gives only 126 — too few for 200 devices."},
+  {q:"Which information does the show startup-config command display?",topic:"Topic 2.4.4",options:["The configuration saved in NVRAM that will be used upon next reboot","The current active configuration running in RAM","The IOS version and hardware information","The routing table entries currently in use"],correct:[0],explain:"'show startup-config' displays the configuration stored in NVRAM, which is loaded at boot time."},
+  // --- IPv4 SUBNET MASK (grouped) ---
+  {q:"A network administrator is adding a new LAN that must support 25 connected devices. What is the smallest network mask that can be used?",topic:"Topic 11.7.2",group:"subnet_hosts",options:["255.255.255.224","255.255.255.128","255.255.255.192","255.255.255.240"],correct:[0],explain:"/27 (255.255.255.224) gives 30 usable hosts. /28 gives only 14 — too few for 25 devices."},
+  {q:"A network administrator is adding a new LAN that must support 61 connected devices. What is the smallest network mask that can be used?",topic:"Topic 11.7.2",group:"subnet_hosts",options:["255.255.255.192","255.255.255.240","255.255.255.224","255.255.255.128"],correct:[0],explain:"/26 (255.255.255.192) gives 62 usable hosts. /27 gives only 30 — too few for 61 devices."},
+  {q:"A network administrator is adding a new LAN that must support 90 connected devices. What is the smallest network mask that can be used?",topic:"Topic 11.7.2",group:"subnet_hosts",options:["255.255.255.128","255.255.255.240","255.255.255.248","255.255.255.224"],correct:[0],explain:"/25 (255.255.255.128) gives 126 usable hosts. /26 gives only 62 — too few for 90 devices."},
+  {q:"A network administrator is adding a new LAN that must support 4 connected devices. What is the smallest network mask that can be used?",topic:"Topic 11.5.2",group:"subnet_hosts",options:["255.255.255.248","255.255.255.0","255.255.255.128","255.255.255.192"],correct:[0],explain:"/29 (255.255.255.248) gives 6 usable hosts. /30 gives only 2 — too few for 4 devices."},
+  {q:"A network administrator is adding a new LAN that must support 10 connected devices. What is the smallest network mask that can be used?",topic:"Topic 11.7.2",group:"subnet_hosts",options:["255.255.255.240","255.255.255.192","255.255.255.248","255.255.255.224"],correct:[0],explain:"/28 (255.255.255.240) gives 14 usable hosts. /29 gives only 6 — too few for 10 devices."},
+  {q:"A network administrator is adding a new LAN that must support 200 connected devices. What is the smallest network mask that can be used?",topic:"Topic 11.7.2",group:"subnet_hosts",options:["255.255.255.0","255.255.255.240","255.255.255.248","255.255.255.224"],correct:[0],explain:"/24 (255.255.255.0) gives 254 usable hosts. /25 gives only 126 — too few for 200 devices."},
+  // --- IPv4 other ---
   {q:"Which subnet would include the address 192.168.1.96 as a usable host address?",topic:"Topic 11.5.2",options:["192.168.1.64/26","192.168.1.32/27","192.168.1.32/28","192.168.1.64/29"],correct:[0],explain:"192.168.1.64/26 covers .64-.127, usable hosts .65-.126. This includes .96. The other subnets don't contain .96 as a usable host."},
   {q:"What type of address is 198.133.219.162?",topic:"Topic 11.3.1",options:["Public","Link-local","Loopback","Multicast"],correct:[0],explain:"198.133.219.162 is a routable public IPv4 address. It falls outside RFC 1918 private, loopback (127.x), link-local (169.254.x), and multicast (224-239.x) ranges."},
   {q:"What does the IP address 192.168.1.15/29 represent?",topic:"Topic 11.1.6",options:["Broadcast address","Subnetwork address","Unicast address","Multicast address"],correct:[0],explain:"With /29, subnet 192.168.1.8/29 has network .8 and broadcast .15. So .15 is the broadcast address — not a usable host."},
-  {q:"What subnet mask would provide enough host addresses for each subnet in a site needing 22 IP phones, 20 PCs, 2 printers, and 2 scanners (all subnets same mask)?",topic:"Topic 11.7.2",options:["255.255.255.224","255.255.255.192","255.255.255.240","255.255.255.248"],correct:[0],explain:"/27 (255.255.255.224) gives 30 usable hosts, which accommodates the largest subnet (22 IP phones) and wastes fewest addresses while using the same mask for all four subnets."},
+  {q:"What subnet mask would provide enough host addresses for a site needing 22 IP phones, 20 PCs, 2 printers, and 2 scanners (all subnets same mask)?",topic:"Topic 11.7.2",options:["255.255.255.224","255.255.255.192","255.255.255.240","255.255.255.248"],correct:[0],explain:"/27 (255.255.255.224) gives 30 usable hosts per subnet, enough for the largest group (22 phones) while wasting fewest addresses overall."},
   // --- IPv6 ---
   {q:"Which is the compressed format of fe80:0000:0000:0000:0220:0b3f:f0e0:0029?",topic:"Topic 12.2.3",options:["fe80::220:b3f:f0e0:29","fe80:9ea:0:2200::fe0:290","fe80:9ea0::2020::bf:e0:9290","fe80:9ea0::2020:0:bf:e0:9290"],correct:[0],explain:"Four consecutive zero groups collapse to '::'. Leading zeros drop per group: 0220->220, 0b3f->b3f, 0029->29."},
   {q:"What type of IPv6 address is ::1/128?",topic:"Topic 12.3.3",options:["Loopback","EUI-64 generated link-local","Global unicast","Unspecified"],correct:[0],explain:"::1/128 is the IPv6 loopback address, equivalent to 127.0.0.1 in IPv4."},
   {q:"Which range of link-local addresses can be assigned to an IPv6-enabled interface?",topic:"Topic 12.3.7",options:["FE80::/10","FEC0::/10","FDEE::/7","FF00::/8"],correct:[0],explain:"IPv6 link-local addresses are in the FE80::/10 range (FE80:: to FEBF::). FEC0::/10 was deprecated. FF00::/8 is multicast."},
-  {q:"Why is NAT not needed in IPv6?",topic:"Topic 12.1.1",options:["Any host can get a public IPv6 address because the number of available IPv6 addresses is extremely large","IPv6 has integrated security so internal addresses don't need to be hidden","The IPv6 header improves packet handling, solving NAT-induced problems","The number of routes increases proportionally to the nodes connected"],correct:[0],explain:"The 128-bit address space (2^128) means every device on earth can have a globally unique public address, eliminating the address scarcity that drove NAT."},
+  {q:"Why is NAT not needed in IPv6?",topic:"Topic 12.1.1",options:["Any host can get a public IPv6 address because the number of available IPv6 addresses is extremely large","IPv6 has integrated security so internal addresses don't need to be hidden","The IPv6 header improves packet handling, solving NAT-induced problems","The number of routes increases proportionally to the nodes connected"],correct:[0],explain:"The 128-bit address space (2^128) means every device can have a globally unique public address, eliminating the scarcity that drove NAT."},
   {q:"What are the three parts of an IPv6 global unicast address? (Choose three.)",topic:"Topic 12.3.6",options:["Global routing prefix","Subnet ID","Interface ID","Broadcast address","Network mask","Link-local prefix"],correct:[0,1,2],explain:"IPv6 GUA: Global Routing Prefix (assigned by ISP, typically /48), Subnet ID (used by organization), Interface ID (host portion, 64 bits)."},
   {q:"What consequence results from configuring a router with the 'ipv6 unicast-routing' global configuration command?",topic:"Topic 12.5.1",options:["The IPv6 enabled router interfaces begin sending ICMPv6 Router Advertisement messages","All router interfaces will be automatically activated","Each router interface will generate an IPv6 link-local address","It statically creates a global unicast address on this router"],correct:[0],explain:"'ipv6 unicast-routing' enables IPv6 packet forwarding and causes interfaces to send ICMPv6 RA messages for SLAAC."},
   {q:"An IPv6 enabled device sends a packet with destination address FF02::2. What is the target?",topic:"Topic 12.3.6",options:["All IPv6 routers on the local link","All IPv6 devices on the local link","All DHCP servers on the local link","All IPv6 devices on all networks"],correct:[0],explain:"FF02::2 is the all-routers multicast address. It reaches all IPv6 routers on the local link segment."},
   {q:"What would be the interface ID of an IPv6 enabled interface with a MAC address of 1C-6F-65-C2-BD-F8 using EUI-64?",topic:"Topic 12.5.6",options:["1E6F:65FF:FEC2:BDF8","0C6F:65FF:FEC2:BDF8","C16F:65FF:FEC2:BDF8","106F:65FF:FEC2:BDF8"],correct:[0],explain:"EUI-64: flip bit 7 of MAC (1C -> 1E), insert FFFE in the middle: 1E6F:65FF:FEC2:BDF8."},
-  {q:"What is the subnet ID associated with the IPv6 address 2001:DA48:FC5:A4:3D1B::1/64?",topic:"Topic 12.3.6",options:["2001:DA48:FC5:A4::/64","2001:DA48::/64","2001:DA48:FC5::A4:/64","2001::/64"],correct:[0],explain:"With a /64 prefix, the first 64 bits form the network/subnet ID: 2001:DA48:FC5:A4::/64. The remaining 64 bits are the interface ID."},
+  {q:"What is the subnet ID associated with the IPv6 address 2001:DA48:FC5:A4:3D1B::1/64?",topic:"Topic 12.3.6",options:["2001:DA48:FC5:A4::/64","2001:DA48::/64","2001:DA48:FC5::A4:/64","2001::/64"],correct:[0],explain:"With a /64 prefix, the first 64 bits form the network/subnet ID: 2001:DA48:FC5:A4::/64."},
   {q:"Which two statements accurately describe an advantage or a disadvantage when deploying NAT for IPv4 in a network? (Choose two.)",topic:"Topic 12.1.1",options:["NAT provides a solution to slow down the IPv4 address depletion","NAT introduces problems for some applications that require end-to-end connectivity","NAT adds authentication capability to IPv4","NAT will impact negatively on switch performance","NAT improves packet handling"],correct:[0,1],explain:"NAT extends IPv4 life by sharing public addresses. However, it breaks end-to-end connectivity needed by some applications (VoIP, IPSec, etc.)."},
-  {q:"A client is using SLAAC to obtain an IPv6 address. After an address has been generated and applied to the interface, what must the client do before it can begin to use this IPv6 address?",topic:"Topic 12.5.1",options:["Send a Neighbor Solicitation message to ensure the address is unique on the network","Send a Router Solicitation message to find a router","Send a DHCP Request to the server","Send an ARP broadcast to verify the address is unique"],correct:[0],explain:"SLAAC requires Duplicate Address Detection (DAD) via Neighbor Solicitation before using a self-generated address."},
+  {q:"A client is using SLAAC to obtain an IPv6 address. After an address has been generated and applied, what must the client do before using this address?",topic:"Topic 12.5.1",options:["Send a Neighbor Solicitation message to ensure the address is unique on the network","Send a Router Solicitation message to find a router","Send a DHCP Request to the server","Send an ARP broadcast to verify the address is unique"],correct:[0],explain:"SLAAC requires Duplicate Address Detection (DAD) via Neighbor Solicitation before using a self-generated address."},
   // --- ICMP ---
   {q:"What are two ICMPv6 messages that are not present in ICMP for IPv4? (Choose two.)",topic:"Topic 13.1.5",options:["Neighbor Solicitation","Router Advertisement","Destination Unreachable","Host Confirmation","Time Exceeded"],correct:[0,1],explain:"Neighbor Solicitation and Router Advertisement are part of ICMPv6's NDP. They replace ARP and router discovery from IPv4."},
   {q:"A technician types 'ping 127.0.0.1'. What is being tested?",topic:"Topic 13.2.2",options:["The integrity of the TCP/IP stack on the local machine","Connectivity to a host with IP address 127.0.0.1 on the network","Tracing the path to a host at 127.0.0.1","The IP address of the network card"],correct:[0],explain:"127.0.0.1 is the loopback address. Pinging it tests the local TCP/IP stack and NIC drivers without putting traffic on the network."},
   {q:"Which two ICMP messages are used by both IPv4 and IPv6 protocols? (Choose two.)",topic:"Topic 13.1.1",options:["Route redirection","Protocol unreachable","Neighbor solicitation","Router advertisement","Router solicitation"],correct:[0,1],explain:"Route redirection and unreachable messages (host, network, protocol, port) exist in both ICMPv4 and ICMPv6. Neighbor/Router solicitation and advertisement are ICMPv6-only (NDP)."},
   {q:"Based on a traceroute output to 192.168.100.1 showing 4 hops with successful replies, which two statements are correct? (Choose two.)",topic:"Topic 17.4.3",options:["There is connectivity between this device and the device at 192.168.100.1","There are 4 hops between this device and the device at 192.168.100.1","This host does not have a default gateway configured","The connectivity allows for videoconferencing calls","The average transmission time between the two hosts is 2 milliseconds"],correct:[0,1],explain:"A successful traceroute confirms L3 connectivity and the hop count. L3 connectivity alone doesn't guarantee application-level performance or video quality."},
-  // --- TRANSPORT LAYER ---
-  {q:"A client packet is received by a server. The packet has a destination port number of 22. What service is the client requesting?",topic:"Topic 14.4.3",options:["SSH","TFTP","DHCP","DNS"],correct:[0],explain:"Port 22 = SSH. Port 69 = TFTP. Port 67/68 = DHCP. Port 53 = DNS."},
-  {q:"A client packet is received by a server. The packet has a destination port number of 110. What service is the client requesting?",topic:"Topic 14.4.3",options:["POP3","DNS","DHCP","SMTP"],correct:[0],explain:"Port 110 = POP3. Port 53 = DNS. Port 67/68 = DHCP. Port 25 = SMTP."},
-  {q:"A client packet is received by a server. The packet has a destination port number of 53. What service is the client requesting?",topic:"Topic 14.4.3",options:["DNS","NetBIOS","POP3","IMAP"],correct:[0],explain:"Port 53 = DNS. Port 143 = IMAP. Port 110 = POP3. NetBIOS uses ports 137-139."},
-  {q:"A client packet is received by a server. The packet has a destination port number of 80. What service is the client requesting?",topic:"Topic 14.4.1",options:["HTTP","DHCP","SMTP","DNS"],correct:[0],explain:"Port 80 = HTTP. Port 443 = HTTPS. Port 25 = SMTP. Port 53 = DNS."},
-  {q:"A client packet is received by a server. The packet has a destination port number of 67. What service is the client requesting?",topic:"Topic 14.4.3",options:["DHCP","FTP","Telnet","SSH"],correct:[0],explain:"Port 67 = DHCP server port. Clients send DHCP Discover/Request to port 67. DHCP replies go to client port 68."},
-  {q:"A client packet is received by a server. The packet has a destination port number of 69. What service is the client requesting?",topic:"Topic 14.4.3",options:["TFTP","DNS","DHCP","SMTP"],correct:[0],explain:"Port 69 = TFTP (Trivial File Transfer Protocol), a simple UDP-based protocol used for booting and small file transfers."},
-  {q:"A client packet is received by a server. The packet has a destination port number of 143. What service is the client requesting?",topic:"Topic 14.4.3",options:["IMAP","FTP","SSH","SMTP"],correct:[0],explain:"Port 143 = IMAP (Internet Message Access Protocol). Port 21 = FTP. Port 22 = SSH. Port 25 = SMTP."},
-  {q:"A client packet is received by a server. The packet has a destination port number of 21. What service is the client requesting?",topic:"Topic 14.4.3",options:["FTP","SSH","TFTP","HTTP"],correct:[0],explain:"Port 21 = FTP control connection. Port 20 = FTP data transfer. Port 22 = SSH. Port 69 = TFTP."},
+  // --- TRANSPORT LAYER - PORTS (grouped) ---
+  {q:"A client packet is received by a server. The packet has a destination port number of 22. What service is the client requesting?",topic:"Topic 14.4.3",group:"port_number",options:["SSH","TFTP","DHCP","DNS"],correct:[0],explain:"Port 22 = SSH. Port 69 = TFTP. Port 67/68 = DHCP. Port 53 = DNS."},
+  {q:"A client packet is received by a server. The packet has a destination port number of 110. What service is the client requesting?",topic:"Topic 14.4.3",group:"port_number",options:["POP3","DNS","DHCP","SMTP"],correct:[0],explain:"Port 110 = POP3. Port 53 = DNS. Port 67/68 = DHCP. Port 25 = SMTP."},
+  {q:"A client packet is received by a server. The packet has a destination port number of 53. What service is the client requesting?",topic:"Topic 14.4.3",group:"port_number",options:["DNS","NetBIOS","POP3","IMAP"],correct:[0],explain:"Port 53 = DNS. Port 143 = IMAP. Port 110 = POP3. NetBIOS uses ports 137-139."},
+  {q:"A client packet is received by a server. The packet has a destination port number of 80. What service is the client requesting?",topic:"Topic 14.4.1",group:"port_number",options:["HTTP","DHCP","SMTP","DNS"],correct:[0],explain:"Port 80 = HTTP. Port 443 = HTTPS. Port 25 = SMTP. Port 53 = DNS."},
+  {q:"A client packet is received by a server. The packet has a destination port number of 67. What service is the client requesting?",topic:"Topic 14.4.3",group:"port_number",options:["DHCP","FTP","Telnet","SSH"],correct:[0],explain:"Port 67 = DHCP server port. Clients send DHCP Discover/Request to port 67. DHCP replies go to client port 68."},
+  {q:"A client packet is received by a server. The packet has a destination port number of 69. What service is the client requesting?",topic:"Topic 14.4.3",group:"port_number",options:["TFTP","DNS","DHCP","SMTP"],correct:[0],explain:"Port 69 = TFTP (Trivial File Transfer Protocol), a simple UDP-based protocol used for booting and small file transfers."},
+  {q:"A client packet is received by a server. The packet has a destination port number of 143. What service is the client requesting?",topic:"Topic 14.4.3",group:"port_number",options:["IMAP","FTP","SSH","SMTP"],correct:[0],explain:"Port 143 = IMAP (Internet Message Access Protocol). Port 21 = FTP. Port 22 = SSH. Port 25 = SMTP."},
+  {q:"A client packet is received by a server. The packet has a destination port number of 21. What service is the client requesting?",topic:"Topic 14.4.3",group:"port_number",options:["FTP","SSH","TFTP","HTTP"],correct:[0],explain:"Port 21 = FTP control connection. Port 20 = FTP data transfer. Port 22 = SSH. Port 69 = TFTP."},
+  // --- TRANSPORT other ---
   {q:"To which TCP port group does port 414 belong?",topic:"Topic 14.4.3",options:["Registered (1024-49151)","Well-known (0-1023)","Private/Dynamic (49152-65535)","Public"],correct:[0],explain:"Port 414 falls in the registered port range: 1024-49151. Well-known ports are 0-1023. Dynamic/private ports are 49152-65535."},
   {q:"A technician with a PC is using multiple applications while connected to the Internet. How is the PC able to keep track of the data flow between multiple application sessions?",topic:"Topic 14.4.1",options:["The data flow is tracked based on the source port number used by each application","The data flow is tracked based on the destination MAC address of the PC","The data flow is tracked based on the source IP address used by the PC","The data flow is tracked based on the destination IP address used by the PC"],correct:[0],explain:"Each application uses a unique randomly-assigned source port. The OS multiplexes multiple connections over a single IP address using port numbers."},
   {q:"What does the value of the window size in a TCP segment specify?",topic:"Topic 14.6.5",options:["The amount of data that can be sent before an acknowledgment is required","The total number of bits received during this TCP session","The amount of data that can be sent at one time without any restriction","A random number used in establishing the 3-way handshake"],correct:[0],explain:"The TCP window size is a flow control mechanism that tells the sender how many bytes can be outstanding (sent but not yet acknowledged) before waiting."},
@@ -298,20 +403,20 @@ const POOL = [
   {q:"Which two protocols operate at the top layer of the TCP/IP protocol suite? (Choose two.)",topic:"Topic 3.3.4",options:["POP","DNS","TCP","IP","UDP","Ethernet"],correct:[0,1],explain:"POP and DNS are application layer protocols (top of TCP/IP stack). TCP/UDP are transport layer. IP is internet layer. Ethernet is network access layer."},
   // --- APPLICATION LAYER ---
   {q:"Which type of server relies on record types such as A, NS, AAAA, and MX in order to provide services?",topic:"Topic 15.4.2",options:["DNS","Email","File","Web"],correct:[0],explain:"DNS uses resource records: A (IPv4), AAAA (IPv6), NS (name server), MX (mail exchange), CNAME (alias)."},
-  {q:"What service is provided by DNS?",topic:"Topic 15.4.1",options:["Resolves domain names, such as cisco.com, into IP addresses","A basic set of rules for exchanging text, graphic images, sound, video on the web","Allows for data transfers between a client and a file server","Uses encryption to secure the exchange of text, graphic images, sound, and video on the web"],correct:[0],explain:"DNS (Domain Name System) translates human-readable hostnames into IP addresses."},
-  {q:"What service is provided by HTTP?",topic:"Topic 15.3.1",options:["A basic set of rules for exchanging text, graphic images, sound, video, and other multimedia files on the web","Uses encryption to secure the exchange of text, graphic images, sound, and video on the web","Allows for data transfers between a client and a file server","An application that allows real-time chatting among remote users"],correct:[0],explain:"HTTP (HyperText Transfer Protocol) defines rules for transferring web content. HTTPS is the encrypted version using TLS."},
-  {q:"What service is provided by HTTPS?",topic:"Topic 15.3.2",options:["Uses encryption to secure the exchange of text, graphic images, sound, and video on the web","Resolves domain names, such as cisco.com, into IP addresses","Allows for data transfers between a client and a file server","Allows remote access to network devices and servers"],correct:[0],explain:"HTTPS = HTTP + TLS encryption. It secures web traffic so content cannot be intercepted or tampered with in transit."},
-  {q:"What service is provided by SMTP?",topic:"Topic 15.3.4",options:["Allows clients to send email to a mail server and servers to send email to other servers","Allows remote access to network devices and servers","Uses encryption to provide secure remote access to network devices and servers","An application that allows real-time chatting among remote users"],correct:[0],explain:"SMTP (Simple Mail Transfer Protocol) is used for sending email. POP3 and IMAP are used for retrieving email."},
-  {q:"What service is provided by POP3?",topic:"Topic 15.3.4",options:["Retrieves email from the server by downloading the email to the local mail application of the client","An application that allows real-time chatting among remote users","Allows remote access to network devices and servers","Uses encryption to provide secure remote access to network devices and servers"],correct:[0],explain:"POP3 downloads email from the server to the local client, typically deleting it from the server afterward."},
-  {q:"What service is provided by FTP?",topic:"Topic 15.5.1",options:["Allows for data transfers between a client and a file server","A basic set of rules for exchanging text, graphic images, sound, video on the web","An application that allows real-time chatting among remote users","Uses encryption to secure the exchange of text, graphic images, sound, and video on the web"],correct:[0],explain:"FTP (File Transfer Protocol) allows uploading and downloading files between a client and a file server using ports 20 (data) and 21 (control)."},
-  {q:"What service is provided by DHCP?",topic:"Topic 15.3.1",options:["Automatically assigns IP addressing information to network hosts","Resolves domain names into IP addresses","Allows for data transfers between a client and a file server","Uses encryption to secure web communications"],correct:[0],explain:"DHCP (Dynamic Host Configuration Protocol) automatically provides IP address, subnet mask, default gateway, and DNS server to network hosts."},
-  {q:"What service is provided by BOOTP?",topic:"Topic 3.3.4",options:["Legacy application that enables a diskless workstation to discover its own IP address and find a BOOTP server on the network","Uses encryption to secure the exchange of text, graphic images, sound, and video on the web","Allows for data transfers between a client and a file server","A basic set of rules for exchanging text, graphic images, sound, video on the web"],correct:[0],explain:"BOOTP (Bootstrap Protocol) is a legacy protocol that allowed diskless workstations to get an IP address at boot. DHCP is its modern replacement."},
+  {q:"What service is provided by DNS?",topic:"Topic 15.4.1",group:"service_desc",options:["Resolves domain names, such as cisco.com, into IP addresses","A basic set of rules for exchanging text, graphic images, sound, video on the web","Allows for data transfers between a client and a file server","Uses encryption to secure the exchange of text, graphic images, sound, and video on the web"],correct:[0],explain:"DNS (Domain Name System) translates human-readable hostnames into IP addresses."},
+  {q:"What service is provided by HTTP?",topic:"Topic 15.3.1",group:"service_desc",options:["A basic set of rules for exchanging text, graphic images, sound, video, and other multimedia files on the web","Uses encryption to secure the exchange of text, graphic images, sound, and video on the web","Allows for data transfers between a client and a file server","An application that allows real-time chatting among remote users"],correct:[0],explain:"HTTP (HyperText Transfer Protocol) defines rules for transferring web content. HTTPS is the encrypted version using TLS."},
+  {q:"What service is provided by HTTPS?",topic:"Topic 15.3.2",group:"service_desc",options:["Uses encryption to secure the exchange of text, graphic images, sound, and video on the web","Resolves domain names, such as cisco.com, into IP addresses","Allows for data transfers between a client and a file server","Allows remote access to network devices and servers"],correct:[0],explain:"HTTPS = HTTP + TLS encryption. It secures web traffic so content cannot be intercepted or tampered with in transit."},
+  {q:"What service is provided by SMTP?",topic:"Topic 15.3.4",group:"service_desc",options:["Allows clients to send email to a mail server and servers to send email to other servers","Allows remote access to network devices and servers","Uses encryption to provide secure remote access to network devices and servers","An application that allows real-time chatting among remote users"],correct:[0],explain:"SMTP (Simple Mail Transfer Protocol) is used for sending email. POP3 and IMAP are used for retrieving email."},
+  {q:"What service is provided by POP3?",topic:"Topic 15.3.4",group:"service_desc",options:["Retrieves email from the server by downloading the email to the local mail application of the client","An application that allows real-time chatting among remote users","Allows remote access to network devices and servers","Uses encryption to provide secure remote access to network devices and servers"],correct:[0],explain:"POP3 downloads email from the server to the local client, typically deleting it from the server afterward."},
+  {q:"What service is provided by FTP?",topic:"Topic 15.5.1",group:"service_desc",options:["Allows for data transfers between a client and a file server","A basic set of rules for exchanging text, graphic images, sound, video on the web","An application that allows real-time chatting among remote users","Uses encryption to secure the exchange of text, graphic images, sound, and video on the web"],correct:[0],explain:"FTP (File Transfer Protocol) allows uploading and downloading files between a client and a file server using ports 20 (data) and 21 (control)."},
+  {q:"What service is provided by DHCP?",topic:"Topic 15.3.1",group:"service_desc",options:["Automatically assigns IP addressing information to network hosts","Resolves domain names into IP addresses","Allows for data transfers between a client and a file server","Uses encryption to secure web communications"],correct:[0],explain:"DHCP (Dynamic Host Configuration Protocol) automatically provides IP address, subnet mask, default gateway, and DNS server to network hosts."},
+  {q:"What service is provided by BOOTP?",topic:"Topic 3.3.4",group:"service_desc",options:["Legacy application that enables a diskless workstation to discover its own IP address and find a BOOTP server on the network","Uses encryption to secure the exchange of text, graphic images, sound, and video on the web","Allows for data transfers between a client and a file server","A basic set of rules for exchanging text, graphic images, sound, video on the web"],correct:[0],explain:"BOOTP (Bootstrap Protocol) is a legacy protocol that allowed diskless workstations to get an IP address at boot. DHCP is its modern replacement."},
   {q:"What is an advantage for small organizations of adopting IMAP instead of POP?",topic:"Topic 15.3.4",options:["Messages are kept in the mail servers until they are manually deleted from the email client","POP only allows the client to store messages in a centralized way, while IMAP allows distributed storage","When the user connects to a POP server, copies are kept for a short time, but IMAP for a long time","IMAP sends and retrieves email, but POP only retrieves email"],correct:[0],explain:"IMAP keeps messages on the server until manually deleted, enabling access from multiple devices with consistent state."},
   {q:"A technician can ping a web server's IP address but cannot ping its URL. Which utility can diagnose the problem?",topic:"Topic 15.4.4",options:["nslookup","tracert","ipconfig","netstat"],correct:[0],explain:"The symptom indicates a DNS resolution failure. 'nslookup' is used to manually query DNS servers to diagnose name resolution problems."},
   {q:"Which command is used to manually query a DNS server to resolve a specific host name?",topic:"Topic 15.4.4",options:["nslookup","tracert","ipconfig /displaydns","net"],correct:[0],explain:"'nslookup' lets you manually query a DNS server. 'ipconfig /displaydns' only shows the local DNS cache."},
   {q:"Which two commands could be used to check if DNS name resolution is working properly on a Windows PC? (Choose two.)",topic:"Topic 17.7.5",options:["nslookup cisco.com","ping cisco.com","ipconfig /flushdns","net cisco.com","nbtstat cisco.com"],correct:[0,1],explain:"'ping cisco.com' forces DNS resolution before sending ICMP packets. 'nslookup' queries DNS servers directly."},
   {q:"A user is attempting to access http://www.cisco.com/ without success. Which two configuration values must be set on the host to allow this access? (Choose two.)",topic:"Topic 11.1.2",options:["DNS server","Default gateway","Source port number","HTTP server","Source MAC address"],correct:[0,1],explain:"To access a web server by URL: DNS server is needed to resolve the hostname, and a default gateway is needed to reach remote networks."},
-  // --- NETWORK SECURITY ---
+  // --- SECURITY ---
   {q:"Which component is addressed in the AAA framework when a company assigns Read-Only rights to anyone logged in and Edit rights only to the admin group?",topic:"Topic 16.3.4",options:["Authorization","Accounting","Authentication","Automation"],correct:[0],explain:"Authorization determines what resources and operations a user can access after being authenticated. Read-Only vs. Edit rights = authorization policy."},
   {q:"A network administrator issues: 'login block-for 180 attempts 2 within 30'. Which threat is being prevented?",topic:"Topic 16.4.3",options:["A user trying to guess a password to access the router","A worm attempting to access another part of the network","An unidentified individual trying to access the equipment room","A device trying to inspect traffic on a link"],correct:[0],explain:"This command blocks login access after 2 failed attempts within 30 seconds, for 180 seconds — mitigating brute-force password attacks on the router."},
   {q:"What happens when 'transport input ssh' is entered on the switch vty lines?",topic:"Topic 16.4.4",options:["Communication between the switch and remote users is encrypted","The SSH client on the switch is enabled","The switch requires a username/password combination for remote access","The switch requires remote connections via a proprietary client software"],correct:[0],explain:"'transport input ssh' restricts VTY access to SSH only, encrypting all remote CLI sessions. Telnet connections are rejected."},
@@ -322,21 +427,41 @@ const POOL = [
   {q:"A group of Windows PCs can access local resources but not the Internet. Which three Windows CLI commands will help troubleshoot IP address, DNS, and router connectivity? (Choose three.)",topic:"Topic 17.5.1",options:["ipconfig","ping","nslookup","netsh interface ipv6 show neighbor","arp -a","netstat"],correct:[0,1,2],explain:"'ipconfig' shows IP/DNS config. 'ping' tests connectivity to the local router. 'nslookup' tests DNS resolution."},
   {q:"Which two statements describe how to assess traffic flow patterns using a protocol analyzer? (Choose two.)",topic:"Topic 17.3.2",options:["Capture traffic during peak utilization times to get a good representation of traffic types","Perform the capture on different network segments","Capture traffic on the weekends when most employees are off work","Only capture traffic in areas that receive most traffic such as the data center","Only capture WAN traffic because web traffic creates the largest traffic volume"],correct:[0,1],explain:"Capture during peak hours to see real-world traffic mix. Capture on different segments to see locally-contained traffic patterns."},
   {q:"Users are reporting longer delays in authentication and accessing network resources during certain time periods. What should network engineers check to find out if this is normal network behavior?",topic:"Topic 17.4.5",options:["The network performance baseline","Syslog records and messages","Debug output and packet captures","Network configuration files"],correct:[0],explain:"A network performance baseline documents normal behavior over time. Comparing current performance to the baseline reveals whether delays are expected or anomalous."},
-  {q:"A user is complaining that an external web page is taking longer than normal to load. The web page does eventually load. Which tool should a technician use to locate where the issue is in the network?",topic:"Topic 17.4.3",options:["tracert","ping","ipconfig","netstat"],correct:[0],explain:"'tracert' (traceroute) shows each hop to the destination with response times, allowing the technician to identify which hop is slow."},
-  {q:"Only employees connected to IPv6 interfaces cannot reach remote networks. The analyst wants to verify that IPv6 routing has been enabled. What is the best command?",topic:"Topic 12.5.1",options:["show running-config","copy running-config startup-config","show interfaces","show ip nat translations"],correct:[0],explain:"'show running-config' will reveal whether 'ipv6 unicast-routing' is present in the active configuration."},
-  {q:"Two pings were issued from a host: first to the default gateway (failed), second to an external host (successful). What is a possible cause for the failed ping?",topic:"Topic 17.7.4",options:["The default gateway is configured with the wrong IP address","The host has no default gateway configured","The external host is unreachable","The DNS server is not responding"],correct:[0],explain:"If pinging the default gateway fails but an external host succeeds, the gateway IP is misconfigured on the host — the actual router is reachable by a different path."},
+  {q:"A user complains that an external web page is taking longer than normal to load. Which tool should a technician use to locate where the issue is?",topic:"Topic 17.4.3",options:["tracert","ping","ipconfig","netstat"],correct:[0],explain:"'tracert' (traceroute) shows each hop to the destination with response times, allowing the technician to identify which hop is slow."},
+  {q:"Only employees connected to IPv6 interfaces cannot reach remote networks. What is the best command to verify IPv6 routing is enabled?",topic:"Topic 12.5.1",options:["show running-config","copy running-config startup-config","show interfaces","show ip nat translations"],correct:[0],explain:"'show running-config' will reveal whether 'ipv6 unicast-routing' is present in the active configuration."},
+  {q:"Two pings were issued from a host: first to the default gateway (failed), second to an external host (successful). What is a possible cause for the failed ping?",topic:"Topic 17.7.4",options:["The default gateway is configured with the wrong IP address","The host has no default gateway configured","The external host is unreachable","The DNS server is not responding"],correct:[0],explain:"If pinging the default gateway fails but an external host succeeds, the gateway IP is misconfigured on the host."},
 ];
 
-// Show pool count on start screen
-document.getElementById('pool-count').textContent = POOL.length;
-
+// ============================================================
+// CONFIGURATION
+// ============================================================
 const EXAM_SIZE = 60;
 const PASS_PCT = 70;
-const TIMER_SECS = 75 * 60; // 1h15m
+const TIMER_SECS = 75 * 60;
+const GROUP_MAX = 2; // max questions per group per round
+const WRONGS_KEY = 'ccna1_wrongs_v2';
 
-let questions = [], current = 0, score = 0, answers = [], checked = false, selected = new Set();
-let timerInterval = null, startTime = null, secondsLeft = TIMER_SECS;
+document.getElementById('pool-count').textContent = POOL.length;
 
+// ============================================================
+// STATE
+// ============================================================
+let mode = 'study';
+let questions = [];
+let current = 0;
+let checked = {}; // index -> bool (whether checked in study mode)
+let selections = {}; // index -> Set of selected option indices
+let flagged = new Set();
+let startTime = null;
+let secondsLeft = TIMER_SECS;
+let timerInterval = null;
+let paused = false;
+let finished = false;
+let reviewFilter = 'all';
+
+// ============================================================
+// HELPERS
+// ============================================================
 function shuffle(arr) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -346,41 +471,170 @@ function shuffle(arr) {
   return a;
 }
 
+function pickQuestions(pool, n) {
+  // Pick n questions, with group_max limit on grouped questions
+  const grouped = {};
+  const ungrouped = [];
+  pool.forEach(q => {
+    if (q.group) {
+      if (!grouped[q.group]) grouped[q.group] = [];
+      grouped[q.group].push(q);
+    } else {
+      ungrouped.push(q);
+    }
+  });
+  // From each group, pick at most GROUP_MAX
+  const fromGroups = [];
+  Object.values(grouped).forEach(g => {
+    const shuffled = shuffle(g);
+    fromGroups.push(...shuffled.slice(0, GROUP_MAX));
+  });
+  const combined = shuffle([...fromGroups, ...ungrouped]);
+  return combined.slice(0, n);
+}
+
+function loadWrongs() {
+  try {
+    const raw = localStorage.getItem(WRONGS_KEY);
+    if (!raw) return [];
+    return JSON.parse(raw);
+  } catch (e) { return []; }
+}
+
+function saveWrongs(wrongQs) {
+  try {
+    localStorage.setItem(WRONGS_KEY, JSON.stringify(wrongQs));
+  } catch (e) {}
+}
+
+function clearWrongs() {
+  if (!confirm('Weet je zeker dat je alle opgeslagen fouten wilt wissen?')) return;
+  try { localStorage.removeItem(WRONGS_KEY); } catch (e) {}
+  updateWrongsUI();
+}
+
+function updateWrongsUI() {
+  const wrongs = loadWrongs();
+  const card = document.getElementById('wrong-mode-card');
+  const desc = document.getElementById('wrong-desc');
+  const count = document.getElementById('wrong-count');
+  const clearBtn = document.getElementById('clear-wrongs-btn');
+  if (wrongs.length === 0) {
+    card.classList.add('disabled');
+    desc.textContent = 'Nog geen fouten opgeslagen. Maak eerst een ronde in study of exam mode.';
+    count.textContent = '';
+    clearBtn.style.display = 'none';
+    if (mode === 'wrong') selectMode('study');
+  } else {
+    card.classList.remove('disabled');
+    desc.textContent = `Oefen alleen vragen die je bij een vorige ronde fout had. Geen tijdslimiet.`;
+    count.textContent = `(${wrongs.length} beschikbaar)`;
+    clearBtn.style.display = 'inline-block';
+  }
+}
+
+// ============================================================
+// MODE SELECTION
+// ============================================================
+function selectMode(m) {
+  const card = document.querySelector(`[data-mode="${m}"]`);
+  if (card.classList.contains('disabled')) return;
+  mode = m;
+  document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+}
+
+// ============================================================
+// QUIZ LIFECYCLE
+// ============================================================
 function startQuiz() {
-  // Pick EXAM_SIZE random questions from pool
-  const picked = shuffle(POOL).slice(0, EXAM_SIZE);
+  let picked;
+  if (mode === 'wrong') {
+    const wrongIds = new Set(loadWrongs());
+    const wrongQs = POOL.filter(q => wrongIds.has(q.q));
+    if (wrongQs.length === 0) {
+      alert('Geen opgeslagen fouten beschikbaar.');
+      return;
+    }
+    picked = shuffle(wrongQs);
+  } else {
+    picked = pickQuestions(POOL, EXAM_SIZE);
+  }
+
   // Shuffle options within each question
   questions = picked.map(q => {
+    const origQ = q; // keep reference to original question text for wrong-tracking
     const sh = shuffle(q.options.map((_, i) => i));
     const nc = sh.map((o, ni) => q.correct.includes(o) ? ni : -1).filter(x => x >= 0);
-    return { q: q.q, topic: q.topic, options: sh.map(i => q.options[i]), correct: nc, explain: q.explain };
+    return {
+      q: q.q,
+      origText: q.q,
+      topic: q.topic,
+      options: sh.map(i => q.options[i]),
+      correct: nc,
+      explain: q.explain
+    };
   });
 
-  current = 0; score = 0; answers = [];
+  current = 0;
+  checked = {};
+  selections = {};
+  flagged = new Set();
+  finished = false;
+  paused = false;
+
   document.getElementById('start-screen').style.display = 'none';
   document.getElementById('results-screen').style.display = 'none';
   document.getElementById('quiz-screen').style.display = 'block';
-  document.getElementById('hdr-score').style.display = 'flex';
+  document.getElementById('nav-overview').classList.remove('hidden');
+
+  // Header badges
+  document.getElementById('hdr-score').style.display = (mode === 'study') ? 'flex' : 'none';
   document.getElementById('hdr-progress').style.display = 'inline';
-  document.getElementById('timer-badge').style.display = 'inline';
-  document.getElementById('total-live').textContent = EXAM_SIZE;
+  document.getElementById('total-live').textContent = questions.length;
+  document.getElementById('score-live').textContent = '0';
 
-  // Start timer
-  secondsLeft = TIMER_SECS;
-  startTime = Date.now();
-  clearInterval(timerInterval);
-  updateTimer();
-  timerInterval = setInterval(() => {
-    secondsLeft--;
+  const modeBadge = document.getElementById('hdr-mode');
+  modeBadge.style.display = 'inline';
+  modeBadge.textContent = mode === 'study' ? '📚 Study' : mode === 'exam' ? '⏱️ Exam' : '🎯 Retry';
+
+  // Timer only in exam mode
+  if (mode === 'exam') {
+    secondsLeft = TIMER_SECS;
+    startTime = Date.now();
+    document.getElementById('timer-badge').style.display = 'inline';
+    clearInterval(timerInterval);
     updateTimer();
-    if (secondsLeft <= 0) {
-      clearInterval(timerInterval);
-      showResults();
-    }
-  }, 1000);
+    timerInterval = setInterval(() => {
+      if (!paused) {
+        secondsLeft--;
+        updateTimer();
+        if (secondsLeft <= 0) {
+          clearInterval(timerInterval);
+          finishQuiz();
+        }
+      }
+    }, 1000);
+  } else {
+    startTime = Date.now();
+    document.getElementById('timer-badge').style.display = 'none';
+  }
 
-  updateScore();
   render();
+  renderNavOverview();
+}
+
+function togglePause() {
+  if (mode !== 'exam') return;
+  paused = !paused;
+  const el = document.getElementById('timer-badge');
+  if (paused) {
+    el.classList.add('paused');
+    el.title = 'Gepauzeerd - klik om te hervatten';
+  } else {
+    el.classList.remove('paused');
+    el.title = 'Klik om te pauzeren';
+  }
 }
 
 function updateTimer() {
@@ -393,97 +647,265 @@ function updateTimer() {
   const el = document.getElementById('timer-badge');
   el.textContent = str;
   el.className = 'badge timer-b';
-  if (secondsLeft <= 300) el.classList.add('danger');
+  if (paused) el.classList.add('paused');
+  else if (secondsLeft <= 300) el.classList.add('danger');
   else if (secondsLeft <= 900) el.classList.add('warn');
 }
 
+// ============================================================
+// RENDER QUESTION
+// ============================================================
 function render() {
   const q = questions[current];
-  checked = false; selected = new Set();
-  document.getElementById('q-num').textContent = `Vraag ${current + 1} van ${EXAM_SIZE}`;
+  document.getElementById('q-num').textContent = `Vraag ${current + 1} van ${questions.length}`;
   document.getElementById('q-topic').textContent = q.topic;
   document.getElementById('q-text').textContent = q.q;
-  const isM = q.correct.length > 1;
+
+  const isMulti = q.correct.length > 1;
   const note = document.getElementById('choose-note');
-  note.style.display = isM ? 'block' : 'none';
-  if (isM) note.textContent = `Choose ${q.correct.length} — selecteer meerdere antwoorden`;
-  const c = document.getElementById('options-container');
-  c.innerHTML = '';
+  note.style.display = isMulti ? 'block' : 'none';
+  if (isMulti) note.textContent = `Choose ${q.correct.length} — selecteer meerdere antwoorden`;
+
+  // Flag button state
+  const flagBtn = document.getElementById('flag-btn');
+  if (flagged.has(current)) flagBtn.classList.add('flagged');
+  else flagBtn.classList.remove('flagged');
+
+  // Selections
+  const sel = selections[current] || new Set();
+  selections[current] = sel;
+  const isChecked = checked[current] && mode === 'study';
+
+  const container = document.getElementById('options-container');
+  container.innerHTML = '';
   q.options.forEach((opt, i) => {
-    const d = document.createElement('div');
-    d.className = 'option';
-    d.innerHTML = `<div class="opt-letter">${'ABCDE'[i]}</div><div>${opt}</div>`;
-    d.onclick = () => tog(i, d, isM);
-    c.appendChild(d);
+    const div = document.createElement('div');
+    div.className = 'option';
+    div.innerHTML = `<div class="opt-letter">${'ABCDE'[i]}</div><div>${opt}</div>`;
+    if (isChecked) {
+      div.classList.add('locked');
+      const cor = new Set(q.correct);
+      if (cor.has(i) && sel.has(i)) div.classList.add('correct');
+      else if (sel.has(i) && !cor.has(i)) div.classList.add('wrong');
+      else if (cor.has(i) && !sel.has(i)) div.classList.add('missed');
+    } else {
+      if (sel.has(i)) div.classList.add('selected');
+      div.onclick = () => toggleOption(i, div, isMulti);
+    }
+    container.appendChild(div);
   });
-  document.getElementById('feedback-box').className = 'feedback-box';
-  document.getElementById('btn-check').style.display = 'inline-block';
-  document.getElementById('btn-next').style.display = 'none';
-  document.getElementById('prog-fill').style.width = ((current / EXAM_SIZE) * 100) + '%';
-  document.getElementById('hdr-progress').textContent = `${current + 1}/${EXAM_SIZE}`;
+
+  // Feedback box
+  const fb = document.getElementById('feedback-box');
+  if (isChecked) {
+    fb.classList.add('show');
+    const ok = isCorrectAnswer(current);
+    const res = document.getElementById('feedback-result');
+    res.textContent = ok ? '✓ Correct!' : '✗ Incorrect';
+    res.className = 'feedback-result ' + (ok ? 'ok' : 'fail');
+    document.getElementById('feedback-explain').textContent = q.explain;
+  } else {
+    fb.classList.remove('show');
+  }
+
+  // Buttons
+  document.getElementById('btn-prev').disabled = (current === 0);
+  const btnCheck = document.getElementById('btn-check');
+  const btnNext = document.getElementById('btn-next');
+  const btnFinish = document.getElementById('btn-finish');
+
+  if (mode === 'study') {
+    btnCheck.style.display = isChecked ? 'none' : 'inline-block';
+    btnCheck.disabled = (sel.size === 0);
+  } else {
+    btnCheck.style.display = 'none';
+  }
+
+  const isLast = (current === questions.length - 1);
+  btnNext.style.display = isLast ? 'none' : 'inline-block';
+  btnFinish.style.display = isLast ? 'inline-block' : 'none';
+
+  // Progress
+  document.getElementById('prog-fill').style.width = (((current + 1) / questions.length) * 100) + '%';
+  document.getElementById('hdr-progress').textContent = `${current + 1}/${questions.length}`;
+
+  // Update nav overview highlight
+  renderNavOverview();
 }
 
-function tog(i, div, isM) {
-  if (checked) return;
-  if (!isM) { selected.clear(); document.querySelectorAll('.option').forEach(el => el.classList.remove('selected')); }
-  if (selected.has(i)) { selected.delete(i); div.classList.remove('selected'); }
-  else { selected.add(i); div.classList.add('selected'); }
+function toggleOption(i, div, isMulti) {
+  const sel = selections[current];
+  if (!isMulti) {
+    sel.clear();
+    document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
+  }
+  if (sel.has(i)) {
+    sel.delete(i);
+    div.classList.remove('selected');
+  } else {
+    sel.add(i);
+    div.classList.add('selected');
+  }
+  // Enable check button if in study mode
+  if (mode === 'study') {
+    document.getElementById('btn-check').disabled = (sel.size === 0);
+  }
+  renderNavOverview();
+}
+
+function toggleFlag() {
+  if (flagged.has(current)) flagged.delete(current);
+  else flagged.add(current);
+  const btn = document.getElementById('flag-btn');
+  btn.classList.toggle('flagged');
+  renderNavOverview();
+}
+
+// ============================================================
+// CHECK & NAVIGATION
+// ============================================================
+function isCorrectAnswer(idx) {
+  const q = questions[idx];
+  const sel = selections[idx] || new Set();
+  const cor = new Set(q.correct);
+  return sel.size === cor.size && [...sel].every(x => cor.has(x));
 }
 
 function checkAnswer() {
-  if (selected.size === 0) return;
-  checked = true;
-  const q = questions[current];
-  const cor = new Set(q.correct);
-  const ok = selected.size === cor.size && [...selected].every(x => cor.has(x));
-  if (ok) score++;
-  document.querySelectorAll('.option').forEach((d, i) => {
-    d.onclick = null;
-    if (cor.has(i) && selected.has(i)) d.className = 'option correct';
-    else if (selected.has(i) && !cor.has(i)) d.className = 'option wrong';
-    else if (cor.has(i) && !selected.has(i)) d.className = 'option missed';
-  });
-  const fb = document.getElementById('feedback-box');
-  fb.classList.add('show');
-  const res = document.getElementById('feedback-result');
-  res.textContent = ok ? '✓ Correct!' : '✗ Incorrect';
-  res.className = 'feedback-result ' + (ok ? 'ok' : 'fail');
-  document.getElementById('feedback-explain').textContent = q.explain;
-  answers.push({ q: q.q, correct: [...cor].map(i => q.options[i]), selected: [...selected].map(i => q.options[i]), ok });
-  document.getElementById('btn-check').style.display = 'none';
-  document.getElementById('btn-next').style.display = 'inline-block';
-  updateScore();
+  if (mode !== 'study') return;
+  const sel = selections[current];
+  if (!sel || sel.size === 0) return;
+  checked[current] = true;
+  updateLiveScore();
+  render();
 }
 
-function updateScore() { document.getElementById('score-live').textContent = score; }
+function updateLiveScore() {
+  let score = 0;
+  for (let i = 0; i < questions.length; i++) {
+    if (checked[i] && isCorrectAnswer(i)) score++;
+  }
+  document.getElementById('score-live').textContent = score;
+}
 
 function nextQuestion() {
-  current++;
-  if (current >= EXAM_SIZE) showResults();
-  else render();
+  if (current < questions.length - 1) {
+    current++;
+    render();
+  }
 }
 
+function prevQuestion() {
+  if (current > 0) {
+    current--;
+    render();
+  }
+}
+
+function goToQuestion(idx) {
+  current = idx;
+  render();
+}
+
+function confirmFinish() {
+  const unanswered = [];
+  for (let i = 0; i < questions.length; i++) {
+    const sel = selections[i];
+    if (!sel || sel.size === 0) unanswered.push(i + 1);
+  }
+  let msg = 'Examen afronden?';
+  if (unanswered.length > 0) {
+    msg += `\n\n${unanswered.length} vraag${unanswered.length > 1 ? 'gen' : ''} nog niet beantwoord (${unanswered.slice(0, 10).join(', ')}${unanswered.length > 10 ? '...' : ''}).`;
+  }
+  if (confirm(msg)) finishQuiz();
+}
+
+function finishQuiz() {
+  finished = true;
+  clearInterval(timerInterval);
+  showResults();
+}
+
+// ============================================================
+// NAV OVERVIEW
+// ============================================================
+function renderNavOverview() {
+  const nav = document.getElementById('nav-overview');
+  nav.innerHTML = '';
+  for (let i = 0; i < questions.length; i++) {
+    const chip = document.createElement('button');
+    chip.className = 'nav-chip';
+    chip.textContent = i + 1;
+    chip.onclick = () => goToQuestion(i);
+    if (i === current) chip.classList.add('current');
+    else if (mode === 'study' && checked[i]) {
+      chip.classList.add(isCorrectAnswer(i) ? 'correct' : 'wrong');
+    } else if (selections[i] && selections[i].size > 0) {
+      chip.classList.add('answered');
+    }
+    if (flagged.has(i)) chip.classList.add('flagged');
+    nav.appendChild(chip);
+  }
+}
+
+// ============================================================
+// RESULTS
+// ============================================================
 function showResults() {
   clearInterval(timerInterval);
   document.getElementById('quiz-screen').style.display = 'none';
   document.getElementById('results-screen').style.display = 'block';
+  document.getElementById('nav-overview').classList.add('hidden');
   document.getElementById('timer-badge').style.display = 'none';
-  document.getElementById('review-section').style.display = 'none';
   document.getElementById('prog-fill').style.width = '100%';
 
-  const pct = Math.round((score / EXAM_SIZE) * 100);
-  const pass = pct >= PASS_PCT;
+  let score = 0;
+  const wrongTexts = [];
+  for (let i = 0; i < questions.length; i++) {
+    if (isCorrectAnswer(i)) {
+      score++;
+    } else {
+      wrongTexts.push(questions[i].origText);
+    }
+  }
+
+  // Save wrongs to localStorage
+  if (mode !== 'wrong' && wrongTexts.length > 0) {
+    const existing = new Set(loadWrongs());
+    wrongTexts.forEach(t => existing.add(t));
+    saveWrongs([...existing]);
+  } else if (mode === 'wrong') {
+    // In retry mode: remove the ones answered correctly this round
+    const existing = new Set(loadWrongs());
+    for (let i = 0; i < questions.length; i++) {
+      if (isCorrectAnswer(i)) existing.delete(questions[i].origText);
+    }
+    saveWrongs([...existing]);
+  }
+
+  const total = questions.length;
+  const pct = Math.round((score / total) * 100);
+  const passThreshold = mode === 'wrong' ? 100 : PASS_PCT;
+  const pass = pct >= passThreshold;
+
   const ring = document.getElementById('result-ring');
   ring.style.borderColor = pass ? 'var(--green)' : 'var(--red)';
   ring.style.color = pass ? 'var(--green)' : 'var(--red)';
   document.getElementById('result-pct').textContent = pct + '%';
   document.getElementById('result-pass').textContent = pass ? 'PASS' : 'FAIL';
-  document.getElementById('result-grade').textContent = pass ? 'Geslaagd — boven de slagingsgrens' : 'Niet geslaagd — nog herhalen';
-  document.getElementById('result-sub').textContent = `${score} van de ${EXAM_SIZE} vragen correct.`;
+
+  let gradeText;
+  if (mode === 'wrong') {
+    gradeText = pass ? 'Alle fouten weggewerkt!' : 'Nog een paar te gaan';
+  } else {
+    gradeText = pass ? 'Geslaagd — boven de slagingsgrens' : 'Niet geslaagd — nog herhalen';
+  }
+  document.getElementById('result-grade').textContent = gradeText;
+  document.getElementById('result-sub').textContent = `${score} van de ${total} vragen correct.`;
   document.getElementById('res-correct').textContent = score;
-  document.getElementById('res-wrong').textContent = EXAM_SIZE - score;
+  document.getElementById('res-wrong').textContent = total - score;
   document.getElementById('res-pct2').textContent = pct + '%';
-  document.getElementById('pass-bar-score').textContent = `${score}/${EXAM_SIZE} (${pct}%)`;
+  document.getElementById('pass-bar-score').textContent = `${score}/${total} (${pct}%)`;
 
   // Time used
   if (startTime) {
@@ -492,20 +914,115 @@ function showResults() {
     const us = used % 60;
     document.getElementById('res-time').textContent = `${um}:${String(us).padStart(2,'0')}`;
   }
+
+  // Update pass bar threshold text
+  const passBar = document.querySelector('.pass-bar');
+  if (mode === 'wrong') {
+    passBar.innerHTML = `Doel: <span class="hl">100%</span> (alle fouten weggewerkt) &nbsp;|&nbsp; Jouw score: <span class="hl">${score}/${total} (${pct}%)</span>`;
+  } else {
+    passBar.innerHTML = `Slagingsgrens: <span class="hl">${PASS_PCT}% (${Math.ceil(PASS_PCT * total / 100)}/${total})</span> &nbsp;|&nbsp; Jouw score: <span class="hl">${score}/${total} (${pct}%)</span>`;
+  }
+
+  // Module stats
+  renderModuleStats();
+
+  // Retry wrongs button
+  const retryBtn = document.getElementById('retry-wrongs-btn');
+  retryBtn.style.display = (total - score) > 0 ? 'inline-block' : 'none';
+
+  // Full review
+  reviewFilter = 'all';
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.filter === 'all');
+  });
+  renderReview();
 }
 
-function showReview() {
-  const sec = document.getElementById('review-section');
-  sec.style.display = 'block';
-  const wrong = answers.filter(a => !a.ok);
-  if (!wrong.length) { sec.innerHTML = '<h3>Fouten</h3><p style="color:var(--green)">Geen fouten!</p>'; return; }
-  let html = `<h3>Fouten (${wrong.length})</h3>`;
-  wrong.forEach(a => {
-    html += `<div class="review-item"><div class="review-q">${a.q}</div><div class="review-ans">Jouw antwoord: ${a.selected.join(' / ')}<br><span class="correct-ans">Correct: ${a.correct.join(' / ')}</span></div></div>`;
+function renderModuleStats() {
+  const stats = {};
+  for (let i = 0; i < questions.length; i++) {
+    const topic = questions[i].topic || 'Unknown';
+    const mod = topic.replace(/^Topic /, '').split('.')[0];
+    const key = `Module ${mod}`;
+    if (!stats[key]) stats[key] = { correct: 0, total: 0 };
+    stats[key].total++;
+    if (isCorrectAnswer(i)) stats[key].correct++;
+  }
+  const sorted = Object.entries(stats).sort((a, b) => {
+    const na = parseInt(a[0].replace('Module ', '')) || 999;
+    const nb = parseInt(b[0].replace('Module ', '')) || 999;
+    return na - nb;
   });
-  sec.innerHTML = html;
-  sec.scrollIntoView({ behavior: 'smooth' });
+  const container = document.getElementById('module-stats');
+  let html = '<h3>Score per module</h3>';
+  sorted.forEach(([mod, s]) => {
+    const pct = Math.round((s.correct / s.total) * 100);
+    const barClass = pct >= 70 ? '' : pct >= 50 ? 'warn' : 'bad';
+    html += `<div class="mod-row">
+      <div class="mod-name">${mod}</div>
+      <div class="mod-bar"><div class="mod-bar-fill ${barClass}" style="width:${pct}%"></div></div>
+      <div class="mod-score">${s.correct}/${s.total} (${pct}%)</div>
+    </div>`;
+  });
+  container.innerHTML = html;
 }
+
+function setReviewFilter(f) {
+  reviewFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.filter === f);
+  });
+  renderReview();
+}
+
+function renderReview() {
+  const list = document.getElementById('review-list');
+  list.innerHTML = '';
+  let shown = 0;
+  for (let i = 0; i < questions.length; i++) {
+    const ok = isCorrectAnswer(i);
+    const isFlagged = flagged.has(i);
+    if (reviewFilter === 'wrong' && ok) continue;
+    if (reviewFilter === 'flagged' && !isFlagged) continue;
+    shown++;
+    const q = questions[i];
+    const sel = selections[i] || new Set();
+    const selText = sel.size > 0 ? [...sel].map(x => q.options[x]).join(' / ') : '(geen antwoord)';
+    const corText = q.correct.map(x => q.options[x]).join(' / ');
+    const cls = isFlagged ? 'flagged' : (ok ? 'ok' : 'fail');
+    const mark = ok ? '✓' : '✗';
+    const color = ok ? 'var(--green)' : 'var(--red)';
+    list.innerHTML += `<div class="review-item ${cls}">
+      <div class="review-topic">${q.topic} ${isFlagged ? '⚑' : ''}</div>
+      <div class="review-q"><span style="color:${color};font-weight:700">${mark}</span> ${q.q}</div>
+      <div class="review-ans">Jouw antwoord: ${selText}<br><span class="correct-ans">Correct: ${corText}</span></div>
+      <div class="review-explain">${q.explain}</div>
+    </div>`;
+  }
+  if (shown === 0) {
+    list.innerHTML = '<p style="color:var(--muted);padding:12px 0">Geen vragen in deze filter.</p>';
+  }
+}
+
+function retryWrongs() {
+  // Build a set of question texts that were wrong in this round
+  const wrongNow = [];
+  for (let i = 0; i < questions.length; i++) {
+    if (!isCorrectAnswer(i)) wrongNow.push(questions[i].origText);
+  }
+  if (wrongNow.length === 0) {
+    alert('Geen fouten om te oefenen.');
+    return;
+  }
+  // Save and start retry
+  saveWrongs(wrongNow);
+  mode = 'wrong';
+  startQuiz();
+}
+
+// Initial setup
+document.getElementById('timer-badge').addEventListener('click', togglePause);
+updateWrongsUI();
 </script>
 </body>
 </html>
