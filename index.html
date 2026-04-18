@@ -532,7 +532,10 @@ let currentLang = detectLanguage();
 function t(key, vars) {
   let s = (I18N[currentLang] && I18N[currentLang][key]) || I18N.en[key] || key;
   if (vars) {
-    for (const k in vars) s = s.replace('{' + k + '}', vars[k]);
+    for (const k in vars) {
+      const re = new RegExp('\\{' + k + '\\}', 'g');
+      s = s.replace(re, vars[k]);
+    }
   }
   return s;
 }
@@ -1059,7 +1062,10 @@ function toggleOption(i, div, isMulti) {
   }
   if (sel.has(i)) { sel.delete(i); div.classList.remove('selected'); }
   else { sel.add(i); div.classList.add('selected'); }
-  if (mode === 'study') dom['btn-check'].disabled = (sel.size === 0);
+  if (mode === 'study') {
+    dom['btn-check'].disabled = (sel.size === 0);
+    updateLiveScore();
+  }
   renderNavOverview();
 }
 
@@ -1097,7 +1103,8 @@ function checkAnswer() {
 function updateLiveScore() {
   let score = 0;
   for (let i = 0; i < questions.length; i++) {
-    if (checked[i] && isCorrectAnswer(i)) score++;
+    // Count as correct if answered correctly, regardless of whether user clicked "Check answer"
+    if (selections[i] && selections[i].size > 0 && isCorrectAnswer(i)) score++;
   }
   dom['score-live'].textContent = score;
 }
